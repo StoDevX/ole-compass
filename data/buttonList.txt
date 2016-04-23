@@ -32,10 +32,3 @@
 507 109	 100 20 140  BuntrockNorth
 9   210	 100 20	50   ChristiansenS
 169 -42	 100 20	150  GranskouTunnel
-
-
-
-
-
-
-

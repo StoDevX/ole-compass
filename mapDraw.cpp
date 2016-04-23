@@ -659,12 +659,12 @@ void init_gl_window() {
 }
 
 int main() {
-  A.loadMapCalc("EntireMapCalc.txt");
+  A.loadMapCalc("data/entireMapCalc.txt");
   A.equateNodes(NodeList);
-  loadButtons("buttonList.txt");
-  loadSpecialButtons("specialButtons.txt");
-  B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs, false,
-                        false);
+  loadButtons("data/buttonList.txt");
+  loadSpecialButtons("data/specialButtons.txt");
+  B.loadMapCalcWeighted("data/entireMapCalc.txt", preferIndoors, avoidStairs,
+                        false, false);
   init_gl_window();
 
   return 0;
