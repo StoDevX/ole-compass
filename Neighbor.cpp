@@ -6,15 +6,13 @@ Neighbor::Neighbor(int arg_target, double arg_weight)
     : target(arg_target), weight(arg_weight) {
   visible = false;
   loc.x = loc.y = 0;
-  id[0] = id[1] = '0';
-  id[2] = 0;
+  id = "00";
 }
 
 Neighbor::Neighbor() {
   target = 0;
   weight = 0;
-  id[0] = id[1] = '0';
-  id[2] = 0;
+  id = "00";
   loc.x = loc.y = 0;
   visible = false;
 }
@@ -24,18 +22,13 @@ void Neighbor::setLocation(int x, int y) {
   loc.y = y;
 }
 
-void Neighbor::setID(const char *a) {
-  id[0] = a[0];
-  id[1] = a[1];
-  id[2] = a[2];
-  id[3] = 0;
-}
+void Neighbor::setID(string a) { id = a; }
 
 void Neighbor::setVisibility(bool vis) { visible = vis; }
 
 bool Neighbor::getVisibility() { return visible; }
 
-char *Neighbor::getID() { return id; }
+string Neighbor::getID() { return id; }
 
 Point Neighbor::getLocation() { return loc; }
 

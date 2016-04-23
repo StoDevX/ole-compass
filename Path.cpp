@@ -1,6 +1,6 @@
 #include "Path.h"
 
-void drawText(double, double, const char *);
+void drawText(double, double, string);
 
 Path::Path() : Map() {
   distance = 0;

@@ -6,19 +6,15 @@ using namespace std;
 #include "texture.h"
 #include <cmath>
 
-#include <list>
-#include <string>
-#include <vector>
-
 #include <algorithm>
 #include <iterator>
+#include <list>
 #include <set>
+#include <string>
 #include <utility> // for pair
+#include <vector>
 
 #include "opengl.h"
-
-#include <list>
-#include <vector>
 
 class Neighbor;
 
@@ -27,7 +23,7 @@ typedef vector<vector<Neighbor>> adjacency_list_t;
 class Neighbor {
 protected:
   Point loc;
-  char id[4];
+  string id;
   int target;
   double weight;
   bool visible;
@@ -38,9 +34,9 @@ public:
   Neighbor(int, double);
   Neighbor();
   void setLocation(int, int);
-  void setID(const char *);
+  void setID(string);
   void setVisibility(bool);
-  char *getID();
+  string getID();
   Point getLocation();
   bool getVisibility();
   void DijkstraComputePaths(int source, const adjacency_list_t &,

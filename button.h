@@ -12,7 +12,7 @@ protected:
   int y_pos;
   int width;
   int height;
-  char *name;
+  string name;
   bool ButtonIsPressed;
   bool overButton;
   int ID;
@@ -20,7 +20,7 @@ protected:
 public:
   Button();
   Button(istream &istr);
-  Button(int x, int y, int w, int h, int id, const char *str);
+  Button(int x, int y, int w, int h, int id, string str);
   void drawText();
   void draw();
   void draw(int r, int g, int b);
@@ -29,10 +29,10 @@ public:
   bool onButton(int x, int y, int ShiftFactorX, int ShiftFactorY);
   void setButtonIsPressed(bool newVal);
   void setoverButton(bool newVal);
-  char *getName();
+  string getName();
   int getID();
   bool getButtonIsPressed();
   void changePosition(int x, int y);
-  void changeName(const char *newName);
+  void changeName(string newName);
 };
 #endif

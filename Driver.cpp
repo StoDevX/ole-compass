@@ -4,14 +4,13 @@ using namespace std;
 #include "Neighbor.h"
 #include "Point.h"
 
-#include <list>
-#include <string>
-#include <vector>
-
 #include <algorithm>
 #include <iterator>
+#include <list>
 #include <set>
+#include <string>
 #include <utility> // for pair
+#include <vector>
 
 void loadMap(const char *filename, adjacency_list_t &vec, int &numNodes,
              Neighbor *&Nodes) {

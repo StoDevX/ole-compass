@@ -12,36 +12,24 @@ Button::Button(istream &istr) {
   istr >> y_pos;
   istr >> width;
   istr >> height;
-  char name[10];
-  for (int i = 0; i < 10; i++)
-    istr >> name[i];
+  istr >> name;
 }
 
-Button::Button(int x, int y, int w, int h, int id, const char *str) {
+Button::Button(int x, int y, int w, int h, int id, string str) {
   x_pos = x;
   y_pos = y;
   width = w;
   height = h;
   ID = id;
-  int length = 0;
-  while (str[length] != 0) {
-    length++;
-  }
-  name = new char[length + 1];
-  for (int i = 0; i < length + 1; i++) {
-    name[i] = str[i];
-  }
+  name = str;
   overButton = false;
   ButtonIsPressed = false;
 }
 
 void Button::drawText() {
   glRasterPos2f(x_pos, y_pos + 10);
-  int length = 0;
-  while (name[length] != 0)
-    ++length;
-  for (int i = 0; i < length; i++)
-    glutBitmapCharacter(GLUT_BITMAP_9_BY_15, name[i]);
+  for (char ch : name)
+    glutBitmapCharacter(GLUT_BITMAP_9_BY_15, ch);
 }
 
 void Button::draw() {
@@ -104,7 +92,7 @@ void Button::setButtonIsPressed(bool newVal) { ButtonIsPressed = newVal; }
 
 void Button::setoverButton(bool newVal) { overButton = newVal; }
 
-char *Button::getName() { return name; }
+string Button::getName() { return name; }
 
 int Button::getID() { return ID; }
 
@@ -115,15 +103,6 @@ void Button::changePosition(int x, int y) {
   y_pos += y;
 }
 
-Button::~Button() { delete[] name; }
+Button::~Button() {}
 
-void Button::changeName(const char *newName) {
-  int length = 0;
-  while (newName[length] != 0) {
-    length++;
-  }
-  name = new char[length + 1];
-  for (int i = 0; i < length + 1; i++) {
-    name[i] = newName[i];
-  }
-}
+void Button::changeName(string newName) { name = newName; }

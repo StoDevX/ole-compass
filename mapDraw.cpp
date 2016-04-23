@@ -68,7 +68,7 @@ Neighbor NodeList[228];
 Button PopupYes(200, 300, 60, 30, -1, "Yes");
 Button PopupNo(300, 300, 60, 30, -1, "No");
 
-void loadButtons(const char *file) {
+void loadButtons(string file) {
   ifstream infile(file);
   if (!infile.good()) {
     cerr << "Warning: Unable to open " << file << ", ignoring it." << endl;
@@ -78,14 +78,13 @@ void loadButtons(const char *file) {
   for (int i = 0; i < numButtons; i++) {
     int x, y, w, h, id;
     infile >> x >> y >> w >> h >> id;
-    char ButtonName[100];
+    string ButtonName;
     infile >> ButtonName;
     ButtonList[i] = new Button(x, y, w, h, id, ButtonName);
-    // ButtonList[i]->display();
   }
 }
 
-void loadSpecialButtons(const char *file) {
+void loadSpecialButtons(string file) {
   ifstream infile(file);
   if (!infile.good()) {
     cerr << "Warning: Unable to open " << file << ", ignoring it." << endl;
@@ -95,14 +94,14 @@ void loadSpecialButtons(const char *file) {
   for (int i = 0; i < numSpecialButtons; i++) {
     int x, y, w, h, id;
     infile >> x >> y >> w >> h >> id;
-    char ButtonName[100];
+    string ButtonName;
     infile >> ButtonName;
     SpecialButtonList[i] = new Button(x, y, w, h, id, ButtonName);
   }
 }
 
-char *IntToBuilding(int x) {
-  char *temp = NodeList[x].getID();
+string IntToBuilding(int x) {
+  string temp = NodeList[x].getID();
   for (int i = 0; i < numButtons; i++) {
     if (x == ButtonList[i]->getID()) {
       temp = ButtonList[i]->getName();
@@ -123,11 +122,10 @@ void drawBox(double x, double y, double width, double height) {
 
 void drawBox(double *pos) { drawBox(pos[0], pos[1], pos[2], pos[3]); }
 
-void drawText(double x, double y, const char *text) {
+void drawText(double x, double y, string text) {
   glRasterPos2f(x, y);
-  int length = strlen(text);
-  for (int i = 0; i < length; i++)
-    glutBitmapCharacter(GLUT_BITMAP_9_BY_15, text[i]);
+  for (const char ch : text)
+    glutBitmapCharacter(GLUT_BITMAP_9_BY_15, ch);
 }
 
 // DRAWING WINDOW
@@ -141,8 +139,8 @@ void drawWindow() {
   // effective "zoom" of the map by increasing or decreasing this resolution.
   // However, try to keep the ratio of width to height as close as possible to
   // maintain the aspect ratio of the map so it isn't stretched or anything.
-  drawTexture(campusmap, -600, -500, 1895,
-              1395); // texID,   x,y,    width, height
+  // texID,   x,y,    width, height
+  drawTexture(campusmap, -600, -500, 1895, 1395);
   // drawing path
   // for (int i=0; i<no_of_segments;++i)
 
@@ -648,7 +646,8 @@ void init_gl_window() {
   glutCreateWindow(programName);
   init();
 
-  campusmap = loadTexture("StoMap.pam"); // key to textures:  load them!
+  string texturePath = "StoMap.pam";
+  campusmap = loadTexture(texturePath); // key to textures:  load them!
 
   glutDisplayFunc(drawWindow);
   glutReshapeFunc(reshape);
@@ -660,17 +659,10 @@ void init_gl_window() {
 }
 
 int main() {
-  // PopupNo.display();
-  // PopupYes.display();
   A.loadMapCalc("EntireMapCalc.txt");
   A.equateNodes(NodeList);
-  // A.listNodes();
   loadButtons("buttonList.txt");
   loadSpecialButtons("specialButtons.txt");
-  // SpecialButtonList[0]->display();
-  // PopupNo.display();
-  // PopupYes.display();
-  // preferIndoors=true;
   B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs, false,
                         false);
   init_gl_window();

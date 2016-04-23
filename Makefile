@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -Wall -g -std=c++11
+CXXFLAGS := -Wall -g -std=c++11 -Wno-deprecated-declarations
 LIBS := -lGL -lglut -lm
 
 ifneq ($(shell uname), Linux)

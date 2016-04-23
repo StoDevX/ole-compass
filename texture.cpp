@@ -15,7 +15,7 @@ class Image {
 
 public:
   Image(unsigned w, unsigned h, unsigned d);
-  Image(const char *fname);
+  Image(string fname);
 
   unsigned getWidth() { return width; }
   unsigned getHeight() { return height; }
@@ -38,7 +38,7 @@ Image::Image(unsigned w, unsigned h, unsigned d) {
   data = new pixel[width * height];
 }
 
-Image::Image(const char *fname) {
+Image::Image(string fname) {
   ifstream f(fname);
   if (!f.good()) {
     cerr << "Error:  could not open file " << fname << endl;
@@ -175,7 +175,7 @@ struct Texture {
   int TEX_WIDTH, TEX_HEIGHT;     // actual size of the texture map (2^n)
   pixel *imgData;                // pixels in the image
   float widthRatio, heightRatio; // how much of the actual size is used
-  Texture(const char *filename); // read in an image file
+  Texture(string filename);      // read in an image file
   Texture(const Texture &t)
       : win2id(t.win2id), TEX_WIDTH(t.TEX_WIDTH), TEX_HEIGHT(t.TEX_HEIGHT),
         widthRatio(t.widthRatio), heightRatio(t.heightRatio) {
@@ -196,16 +196,6 @@ struct Texture {
   ~Texture() { delete[] imgData; }
   int moveImgDataToGraphicsCard();
 };
-
-#if 0
-struct ltstr
-{
-  bool operator()(const char* s1, const char* s2) const
-  {
-    return strcmp(s1, s2) < 0;
-  }
-};
-#endif
 
 vector<Texture> globalTexture;
 map<const string, int> textureFileLookup;
@@ -293,7 +283,7 @@ int Texture::moveImgDataToGraphicsCard() {
 
 // load an image into the texture memory of the graphics card.
 //   filename   the name of a ppm or pam file
-Texture::Texture(const char *filename) {
+Texture::Texture(string filename) {
   // load the picture data into main memory
   Image img(filename);
 
@@ -317,7 +307,7 @@ Texture::Texture(const char *filename) {
   win2id[windowID] = id;
 }
 
-int loadTexture(const char *filename) {
+int loadTexture(string filename) {
   map<const string, int>::iterator iter = textureFileLookup.find(filename);
   if (iter == textureFileLookup.end()) {
     int currNum = globalTexture.size();

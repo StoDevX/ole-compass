@@ -26,14 +26,14 @@ protected:
 public:
   Map();
   int getSize();
-  void loadMap(const char *);
-  void loadMapCalc(const char *);
-  void loadMapCalcWeighted(const char *, bool, bool, bool, bool);
+  void loadMap(string);
+  void loadMapCalc(string);
+  void loadMapCalcWeighted(string, bool, bool, bool, bool);
   adjacency_list_t getDistMatrix();
   Neighbor operator[](int);
   void listNodes();
   void nodeDraw(bool, int, int);
-  void drawConnections(const char *filename);
+  void drawConnections(string filename);
   Neighbor *equateNodes(Neighbor *);
   ~Map();
 };

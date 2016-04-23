@@ -1,6 +1,6 @@
 #include "Map.h"
 
-void drawText(double, double, const char *);
+void drawText(double, double, string);
 
 Map::Map() {
   size = 0;
@@ -11,7 +11,7 @@ int Map::getSize() { return size; }
 
 adjacency_list_t Map::getDistMatrix() { return distMatrix; }
 
-void Map::loadMap(const char *filename) {
+void Map::loadMap(string filename) {
   ifstream g(filename);
   if (!g.good()) {
     cerr << "Warning: Unable to open " << filename << ", ignoring it." << endl;
@@ -21,7 +21,7 @@ void Map::loadMap(const char *filename) {
   g >> size;
   distMatrix.resize(size);
   nodes = new Neighbor[size];
-  char buffer[3];
+  string buffer;
   int numConnections, vertex, weight;
   for (int i = 0; i < size; ++i) {
     g >> buffer;
@@ -36,7 +36,7 @@ void Map::loadMap(const char *filename) {
   }
 }
 
-void Map::loadMapCalc(const char *filename) {
+void Map::loadMapCalc(string filename) {
   ifstream g(filename);
   if (!g.good()) {
     cerr << "Warning: Unable to open " << filename << ", ignoring it." << endl;
@@ -49,7 +49,7 @@ void Map::loadMapCalc(const char *filename) {
   Point a, b;
   double dist;
   bool visib;
-  char buffer[4];
+  string buffer;
   int numConnections, vertex;
   for (int i = 0; i < size; ++i) {
     g >> buffer;
@@ -73,7 +73,7 @@ void Map::loadMapCalc(const char *filename) {
   }
 }
 
-void Map::loadMapCalcWeighted(const char *filename, bool outdoor, bool stairs,
+void Map::loadMapCalcWeighted(string filename, bool outdoor, bool stairs,
                               bool blacktop, bool paths) {
   ifstream g(filename);
   if (nodes != 0) {
@@ -92,7 +92,7 @@ void Map::loadMapCalcWeighted(const char *filename, bool outdoor, bool stairs,
   Point a, b;
   double dist;
   bool visib;
-  char buffer[3];
+  string buffer;
   int numConnections, vertex;
   for (int i = 0; i < size; ++i) {
     g >> buffer;
@@ -153,7 +153,7 @@ void Map::nodeDraw(bool drawAll, int begin, int end) {
   double radius = 12;
   const int NUM_DIVS = 50;
   int x, y;
-  char *buffer;
+  string buffer;
   for (int i = 0; i < size; ++i) {
     if (nodes[i].getVisibility() || drawAll) {
       glColor3f(.4, .4, .8);
@@ -177,7 +177,7 @@ void Map::nodeDraw(bool drawAll, int begin, int end) {
   }
 }
 
-void Map::drawConnections(const char *filename) {
+void Map::drawConnections(string filename) {
   ifstream g(filename);
   if (!g.good()) {
     cerr << "Warning: Unable to open " << filename << ", ignoring it." << endl;
@@ -191,7 +191,7 @@ void Map::drawConnections(const char *filename) {
   int connectType;
   Point one, two;
   bool visib;
-  char buffer[3];
+  string buffer;
   int numConnections, vertex;
   glColor3f(1., 0., 0.);
   for (int i = 0; i < size; ++i) {
