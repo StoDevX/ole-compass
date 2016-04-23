@@ -1,20 +1,4 @@
-#include <iostream>
-using namespace std;
-#include "Point.h"
 #include "Neighbor.h"
-#include <math.h>
-#include "texture.h"
-
-#include <vector>
-#include <string>
-#include <list>
- 
-#include <set>
-#include <utility> // for pair
-#include <algorithm>
-#include <iterator>
-
-#include<GL/glut.h>
 
 const double max_weight = 5000000;
 
@@ -60,7 +44,7 @@ char * Neighbor::getID(){
   return id;
   }
 
-Point Neighbor::getLocation(){ 
+Point Neighbor::getLocation(){
   return loc;
  }
 
@@ -74,13 +58,13 @@ void Neighbor::DijkstraComputePaths(int source,const adjacency_list_t &adjacency
     previous.resize(n, -1);
     set<pair<double, int> > vertex_queue;
     vertex_queue.insert(make_pair(min_distance[source], source));
- 
-    while (!vertex_queue.empty()) 
+
+    while (!vertex_queue.empty())
     {
         double dist = vertex_queue.begin()->first;
         int u = vertex_queue.begin()->second;
         vertex_queue.erase(vertex_queue.begin());
- 
+
         // Visit each edge exiting u
 	const vector<Neighbor> &neighbors = adjacency_list[u];
         for (vector<Neighbor>::const_iterator neighbor_iter = neighbors.begin();
@@ -92,7 +76,7 @@ void Neighbor::DijkstraComputePaths(int source,const adjacency_list_t &adjacency
             double distance_through_u = dist + weight;
 	    if (distance_through_u < min_distance[v]) {
 	        vertex_queue.erase(make_pair(min_distance[v], v));
- 
+
 	        min_distance[v] = distance_through_u;
 	        previous[v] = u;
 	        vertex_queue.insert(make_pair(min_distance[v], v));
@@ -123,10 +107,10 @@ bool Neighbor::onNode(int x, int y, int ShiftFactorX, int ShiftFactorY)
   return dist < radius;
 
   /*
-	return x >= loc.x+ShiftFactorX  && 
-	  y >= loc.y+ShiftFactorY && x <= loc.x+ShiftFactorX + 10 && 
+	return x >= loc.x+ShiftFactorX  &&
+	  y >= loc.y+ShiftFactorY && x <= loc.x+ShiftFactorX + 10 &&
 	  y <= loc.y+ShiftFactorY + 10;*/
-}		
+}
 
 void Neighbor::setNodeIsPressed(bool newVal)
 {

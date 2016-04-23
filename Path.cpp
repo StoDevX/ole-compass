@@ -1,21 +1,4 @@
-#include <iostream>
-#include <ostream>
-#include <fstream>
-#include <string>
-#include<sstream>
-#include <cmath>
-using namespace std;
-#include "math.h"
-#include "Neighbor.h"
-#include "Point.h"
-#include "Map.h"
 #include "Path.h"
-
-#ifdef MACOSX
-#include<GLUT/glut.h>
-#else
-#include<GL/glut.h>
-#endif
 
 void drawText(double, double, const char *);
 
@@ -53,7 +36,7 @@ void Path::emptyPath(){
 void Path::display(){
   cout << "Distance from " << nodes[0].getID() << " to " << nodes[pathsize-1].getID() << ": ";
   cout << distance << endl;
-  cout << "Route: ";			      
+  cout << "Route: ";
   for (unsigned int i = 0; i < pathsize; ++i){
     cout << nodes[i].getID() << " ";}
   cout << endl;
@@ -80,7 +63,7 @@ void Path::setPathsize(unsigned int length){
 void Path::draw(){
   Point one,two;
   if (pathsize==0){ ++pathsize;}
-  for (unsigned int i = 0; i < pathsize-1; ++i){ 
+  for (unsigned int i = 0; i < pathsize-1; ++i){
     one = nodes[i].getLocation();
     two = nodes[i+1].getLocation();
     rectangleDraw(one,two,3,0);

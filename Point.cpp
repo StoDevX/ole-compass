@@ -1,7 +1,4 @@
-#include <iostream>
-using namespace std;
 #include "Point.h"
-#include <math.h>
 
 Point::Point(){x=0;y=0;}
 

@@ -1,6 +1,17 @@
 #ifndef _Path_
 #define _Path_
 #include "Map.h"
+#include <iostream>
+#include <ostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <cmath>
+using namespace std;
+#include "Neighbor.h"
+#include "Point.h"
+
+#include "opengl.h"
 
 class Path: public Map{
 protected:

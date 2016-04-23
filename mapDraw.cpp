@@ -1,16 +1,12 @@
-#include<iostream>
-#include<fstream>
+#include <iostream>
+#include <fstream>
 using namespace std;
-#ifdef MACOSX
-#include<GLUT/glut.h>
-#else
-#include<GL/glut.h>
-#endif
-#include<string.h>
-#include<math.h>
-#include<stdlib.h>
-#include<sstream>
-#include"texture.h"
+#include "opengl.h"
+#include <cstring>
+#include <cmath>
+#include <cstdlib>
+#include <sstream>
+#include "texture.h"
 
 #include "Point.h"
 #include "Neighbor.h"
@@ -21,7 +17,7 @@ using namespace std;
 #include <list>
 
 #include <set>
-#include <utility> 
+#include <utility>
 #include <algorithm>
 #include <iterator>
 
@@ -86,7 +82,7 @@ Button PopupNo(300, 300, 60, 30, -1, "No");
 void loadButtons(const char* file)
 {
   ifstream infile(file);
-  if ( ! infile.good() ) 
+  if ( ! infile.good() )
   {
     cerr << "Warning: Unable to open " << file << ", ignoring it." << endl;
   }
@@ -106,7 +102,7 @@ void loadButtons(const char* file)
 void loadSpecialButtons(const char* file)
 {
   ifstream infile(file);
-  if ( ! infile.good() ) 
+  if ( ! infile.good() )
   {
     cerr << "Warning: Unable to open " << file << ", ignoring it." << endl;
   }
@@ -135,7 +131,7 @@ char* IntToBuilding (int x)
       temp = ButtonList[i]->getName();
     }
   }
-  
+
   return temp;
 }
 
@@ -171,7 +167,7 @@ void drawWindow(){
   glClear(GL_COLOR_BUFFER_BIT);
 
   // draw stuff
-  //The original resolution of the image is 1053 x 775. We can change the effective "zoom" of the map by increasing or decreasing this resolution. However, try to keep the ratio of width to height as close as possible to maintain the aspect ratio of the map so it isn't stretched or anything. 
+  //The original resolution of the image is 1053 x 775. We can change the effective "zoom" of the map by increasing or decreasing this resolution. However, try to keep the ratio of width to height as close as possible to maintain the aspect ratio of the map so it isn't stretched or anything.
   drawTexture(campusmap,  -600, -500, 1895, 1395); // texID,   x,y,    width, height
   //drawing path
   // for (int i=0; i<no_of_segments;++i)
@@ -180,7 +176,7 @@ void drawWindow(){
 
   b.draw();
 
-  //drawing ALL connections. 
+  //drawing ALL connections.
 
   //C.drawConnections("EntireMapCalc.txt");
 
@@ -205,7 +201,7 @@ void drawWindow(){
       ButtonList[i]->draw();
     }
   }
-  
+
 
   for (int i=0; i<numSpecialButtons; i++)
   {
@@ -218,34 +214,34 @@ void drawWindow(){
     {
       if (preferIndoors==true)
       {
-	SpecialButtonList[i]->changeName("Unweigh Indoors");
-	SpecialButtonList[i]->draw(0, 0, 100);
+        SpecialButtonList[i]->changeName("Unweigh Indoors");
+        SpecialButtonList[i]->draw(0, 0, 100);
       }
       else if (preferIndoors==false)
       {
-	SpecialButtonList[i]->changeName("Weigh Indoors");
-	SpecialButtonList[i]->draw(0, 0, 100);
+        SpecialButtonList[i]->changeName("Weigh Indoors");
+        SpecialButtonList[i]->draw(0, 0, 100);
       }
     }
     if (SpecialButtonList[i]->getID() == -8)
     {
       if (avoidStairs == true)
       {
-	SpecialButtonList[i]->changeName("Include stairs");
-	SpecialButtonList[i]->draw(0, 0, 100);
+        SpecialButtonList[i]->changeName("Include stairs");
+        SpecialButtonList[i]->draw(0, 0, 100);
       }
       else if (avoidStairs == false)
       {
-	SpecialButtonList[i]->changeName("Avoid stairs");
-	SpecialButtonList[i]->draw(0, 0, 100);
+        SpecialButtonList[i]->changeName("Avoid stairs");
+        SpecialButtonList[i]->draw(0, 0, 100);
       }
     }
   }
   glColor3f(1., 1., 1.);
   drawText(10-shiftx, 95+shifty, "Panning Rate");
   //popup display
-  if (selectionFinished == true && pathDeclared == false) 
-  { 
+  if (selectionFinished == true && pathDeclared == false)
+  {
     glColor3f(.5, .5, .5); //white
     drawBox(100-shiftx, 100+shifty, 400, 300);
     glColor3f(0., 0., 0.); // text is black
@@ -264,11 +260,11 @@ void drawWindow(){
     if ( PopupYes.getButtonIsPressed() ) {
       selectionFinished=false;
     }
-    if ( PopupNo.getButtonIsPressed() ) { 
+    if ( PopupNo.getButtonIsPressed() ) {
       selectionFinished=false;
-    }   
+    }
   }
- 
+
   glutSwapBuffers();
 }
 
@@ -305,125 +301,125 @@ void mouse(int mouseButton, int state, int x, int y)
       //cout << shiftx << ", " << shifty << endl;
       for (int i=0; i<numButtons; i++)
       {
-	if ( ButtonList[i]->onButton(x, y, shiftx, -shifty) )
-	{
-	  ButtonList[i]->setButtonIsPressed(true);
-	}
-	else 
-	{
-	  ButtonList[i]->setButtonIsPressed(false);
-	}
+        if ( ButtonList[i]->onButton(x, y, shiftx, -shifty) )
+        {
+          ButtonList[i]->setButtonIsPressed(true);
+        }
+        else
+        {
+          ButtonList[i]->setButtonIsPressed(false);
+        }
       }
       for (int i=0; i<A.getSize();i++)
       {
-	if (NodeList[i].onNode(x, y, shiftx, -shifty))
-	{
-	  NodeList[i].setNodeIsPressed(true);
-	}
-	else
-	{
-	  NodeList[i].setNodeIsPressed(false);
-	}
+        if (NodeList[i].onNode(x, y, shiftx, -shifty))
+        {
+          NodeList[i].setNodeIsPressed(true);
+        }
+        else
+        {
+          NodeList[i].setNodeIsPressed(false);
+        }
       }
 
 
       for (int i=0; i<numSpecialButtons; i++)
       {
-	if ( SpecialButtonList[i]->onButton(x, y, shiftx, -shifty) )
-	{
-	  SpecialButtonList[i]->setButtonIsPressed(true);
-	  for (int i=0; i<numButtons; i++)
-	  {
-	    ButtonList[i]->setButtonIsPressed(false);
-	  }
-	  for (int i=0; i<A.getSize(); i++)
-	  {
-	    NodeList[i].setNodeIsPressed(false);
-	  }
-	}
-	else
-	{
-	  SpecialButtonList[i]->setButtonIsPressed(false);
-	}
+        if ( SpecialButtonList[i]->onButton(x, y, shiftx, -shifty) )
+        {
+          SpecialButtonList[i]->setButtonIsPressed(true);
+          for (int i=0; i<numButtons; i++)
+          {
+            ButtonList[i]->setButtonIsPressed(false);
+          }
+          for (int i=0; i<A.getSize(); i++)
+          {
+            NodeList[i].setNodeIsPressed(false);
+          }
+        }
+        else
+        {
+          SpecialButtonList[i]->setButtonIsPressed(false);
+        }
       }
-      
-      
+
+
 
       if ( PopupYes.onButton(x, y, shiftx, -shifty) )
       {
-	PopupYes.setButtonIsPressed(true);
+        PopupYes.setButtonIsPressed(true);
       }
       else
       {
-	PopupYes.setButtonIsPressed(false);
+        PopupYes.setButtonIsPressed(false);
       }
       if ( PopupNo.onButton(x, y, shiftx, -shifty) )
       {
-	PopupNo.setButtonIsPressed(true);
+        PopupNo.setButtonIsPressed(true);
       }
       else
       {
-	PopupNo.setButtonIsPressed(false); 
+        PopupNo.setButtonIsPressed(false);
       }
       }
     else {
       for (int i=0; i<numButtons; i++){
-	if (ButtonList[i]->onButton(x, y, shiftx, -shifty) && ButtonList[i]->getButtonIsPressed() ){
-	  cout << ButtonList[i]->getName() << " selected" << endl;
-	  FillPath(ButtonList[i]->getID());
-	  PrintPath();
-	  ButtonList[i]->setButtonIsPressed(false);
-	}
+        if (ButtonList[i]->onButton(x, y, shiftx, -shifty) && ButtonList[i]->getButtonIsPressed() ){
+          cout << ButtonList[i]->getName() << " selected" << endl;
+          FillPath(ButtonList[i]->getID());
+          PrintPath();
+          ButtonList[i]->setButtonIsPressed(false);
+        }
       }
-      
+
       for (int i=0; i<A.getSize();i++)
       {
-	if (NodeList[i].onNode(x, y, shiftx, -shifty) && NodeList[i].getNodeIsPressed() )
-	{
-	  cout << "Node " << i << " selected" << endl;
-	  FillPath(i);
-	  PrintPath();
-	  NodeList[i].setNodeIsPressed(false);
-	}
+        if (NodeList[i].onNode(x, y, shiftx, -shifty) && NodeList[i].getNodeIsPressed() )
+        {
+          cout << "Node " << i << " selected" << endl;
+          FillPath(i);
+          PrintPath();
+          NodeList[i].setNodeIsPressed(false);
+        }
       }
-      
+
 
       //RESET BUTTON
       if (SpecialButtonList[0]->onButton(x, y, shiftx, -shifty) && SpecialButtonList[0]->getButtonIsPressed() )
       {
-	cout << "GLOBAL RESET" << endl;
-	b.emptyPath();
-	SpecialButtonList[0]->setButtonIsPressed(false);
-	Start=Finish=-1;
-	preferIndoors=false;
-	selectionFinished=false;
-	pathDeclared=false;
-	avoidStairs = false;
-	drawInvisibles=false;
-	drawNodes=true;
-	drawAll=true;
-	drawGrid=false;
+        cout << "GLOBAL RESET" << endl;
+        b.emptyPath();
+        SpecialButtonList[0]->setButtonIsPressed(false);
+        Start=Finish=-1;
+        preferIndoors=false;
+        selectionFinished=false;
+        pathDeclared=false;
+        avoidStairs = false;
+        drawInvisibles=false;
+        drawNodes=true;
+        drawAll=true;
+        drawGrid=false;
       }
 
 
       //PREFER INDOORS BUTTON
       if (SpecialButtonList[5]->onButton(x, y, shiftx, -shifty) && SpecialButtonList[5]->getButtonIsPressed() )
       {
-	if (preferIndoors == false)
-	{
-	  cout << "Prefering indoors" << endl;
-	  preferIndoors = true;
-	  B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
-	  SpecialButtonList[5]->setButtonIsPressed(false);
-	}
-	else if (preferIndoors == true)
-	{
-	  cout << "Not prefering indoors" << endl;
-	  preferIndoors = false;
-	  B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
-	  SpecialButtonList[5]->setButtonIsPressed(false);
-	}
-	//B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
+        if (preferIndoors == false)
+        {
+          cout << "Prefering indoors" << endl;
+          preferIndoors = true;
+          B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
+          SpecialButtonList[5]->setButtonIsPressed(false);
+        }
+        else if (preferIndoors == true)
+        {
+          cout << "Not prefering indoors" << endl;
+          preferIndoors = false;
+          B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
+          SpecialButtonList[5]->setButtonIsPressed(false);
+        }
+        //B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
       }
       //else B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
 
@@ -431,204 +427,204 @@ void mouse(int mouseButton, int state, int x, int y)
       //AVOID STAIRS BUTTON
       if (SpecialButtonList[7]->onButton(x, y, shiftx, -shifty) && SpecialButtonList[7]->getButtonIsPressed() )
       {
-	if (avoidStairs == true)
-	{
-	  cout << "No longer avoiding stairs" << endl;
-	  avoidStairs = false;
-	  B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
-	  SpecialButtonList[7]->setButtonIsPressed(false);
-	}
-	else if (avoidStairs == false)
-	{
-	  cout << "Avoiding Stairs" << endl;
-	  avoidStairs = true;
-	  B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
-	  SpecialButtonList[7]->setButtonIsPressed(false);
-	}
+        if (avoidStairs == true)
+        {
+          cout << "No longer avoiding stairs" << endl;
+          avoidStairs = false;
+          B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
+          SpecialButtonList[7]->setButtonIsPressed(false);
+        }
+        else if (avoidStairs == false)
+        {
+          cout << "Avoiding Stairs" << endl;
+          avoidStairs = true;
+          B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
+          SpecialButtonList[7]->setButtonIsPressed(false);
+        }
       }
 
 
       // DRAW ALL BUTTON
       if (SpecialButtonList[6]->onButton(x, y, shiftx, -shifty) && SpecialButtonList[6]->getButtonIsPressed() )
       {
-	if (drawAll == false)
-	{
-	  drawAll = true;
-	  SpecialButtonList[6]->setButtonIsPressed(false);
-	}
-	else if (drawAll == true)
-	{
-	  drawAll = false;
-	  SpecialButtonList[6]->setButtonIsPressed(false);
-	}
+        if (drawAll == false)
+        {
+          drawAll = true;
+          SpecialButtonList[6]->setButtonIsPressed(false);
+        }
+        else if (drawAll == true)
+        {
+          drawAll = false;
+          SpecialButtonList[6]->setButtonIsPressed(false);
+        }
       }
 
       // DRAW HIDDEN BUTTON
       if (SpecialButtonList[8]->onButton(x, y, shiftx, -shifty) && SpecialButtonList[8]->getButtonIsPressed() )
       {
-	if (drawInvisibles == false)
-	{
-	  drawInvisibles = true;
-	  SpecialButtonList[8]->setButtonIsPressed(false);
-	}
-	else if (drawInvisibles == true)
-	{
-	  drawInvisibles = false;
-	  SpecialButtonList[8]->setButtonIsPressed(false);
-	}
+        if (drawInvisibles == false)
+        {
+          drawInvisibles = true;
+          SpecialButtonList[8]->setButtonIsPressed(false);
+        }
+        else if (drawInvisibles == true)
+        {
+          drawInvisibles = false;
+          SpecialButtonList[8]->setButtonIsPressed(false);
+        }
       }
 
       // DRAW NODES BUTTON
       if (SpecialButtonList[9]->onButton(x, y, shiftx, -shifty) && SpecialButtonList[9]->getButtonIsPressed() )
       {
-	if (drawNodes == false)
-	{
-	  drawNodes = true;
-	  SpecialButtonList[9]->setButtonIsPressed(false);
-	}
-	else if (drawNodes == true)
-	{
-	  drawNodes = false;
-	  SpecialButtonList[9]->setButtonIsPressed(false);
-	}
+        if (drawNodes == false)
+        {
+          drawNodes = true;
+          SpecialButtonList[9]->setButtonIsPressed(false);
+        }
+        else if (drawNodes == true)
+        {
+          drawNodes = false;
+          SpecialButtonList[9]->setButtonIsPressed(false);
+        }
       }
 
       // DRAW GRID BUTTON
       if (SpecialButtonList[10]->onButton(x, y, shiftx, -shifty) && SpecialButtonList[10]->getButtonIsPressed() )
       {
-	if (drawGrid == false)
-	{
-	  drawGrid = true;
-	  SpecialButtonList[10]->setButtonIsPressed(false);
-	}
-	else if (drawGrid == true)
-	{
-	  drawGrid = false;
-	  SpecialButtonList[10]->setButtonIsPressed(false);
-	}
+        if (drawGrid == false)
+        {
+          drawGrid = true;
+          SpecialButtonList[10]->setButtonIsPressed(false);
+        }
+        else if (drawGrid == true)
+        {
+          drawGrid = false;
+          SpecialButtonList[10]->setButtonIsPressed(false);
+        }
       }
-      
+
       if (SpecialButtonList[11]->onButton(x, y, shiftx, -shifty) && SpecialButtonList[11]->getButtonIsPressed() )
       {
-	panRate+=5;
-	SpecialButtonList[11]->setButtonIsPressed(false);
-	cout << "Pan Rate changed to: " << panRate << endl;
+        panRate+=5;
+        SpecialButtonList[11]->setButtonIsPressed(false);
+        cout << "Pan Rate changed to: " << panRate << endl;
       }
       if (SpecialButtonList[12]->onButton(x, y, shiftx, -shifty) && SpecialButtonList[12]->getButtonIsPressed() )
       {
-	panRate-=5;
-	SpecialButtonList[12]->setButtonIsPressed(false);
-	cout << "Pan Rate changed to: " << panRate << endl;
-      }   
+        panRate-=5;
+        SpecialButtonList[12]->setButtonIsPressed(false);
+        cout << "Pan Rate changed to: " << panRate << endl;
+      }
 
 
       //ON SCREEN PANNING BUTTONS
       for (int i=0; i<5; i++)
       {
-	if (SpecialButtonList[i]->onButton(x, y, shiftx, -shifty) && SpecialButtonList[i]->getButtonIsPressed() )
-	{
-	  SpecialButtonList[i]->setButtonIsPressed(false);
-	  if (SpecialButtonList[i]->getID()==-4)
-	  {
-	    if (shiftx+panRate < 500)
-	    {
-	      glTranslatef(panRate, 0., 0.);
-	      shiftx+=panRate;
-	      PopupYes.changePosition(-panRate, 0);
-	      PopupNo.changePosition(-panRate, 0);
-	      for (int i=0; i<numSpecialButtons; i++)
-	      {
-		SpecialButtonList[i]->changePosition(-panRate, 0);
-	      }
-	    }
-	  }
-	  else if (SpecialButtonList[i]->getID()==-2)
-	  {
-	    if (shifty+panRate > -421)
-	    {
-	      glTranslatef(0., panRate, 0.);
-	      shifty+=-panRate;
-	      PopupYes.changePosition(0, -panRate);
-	      PopupNo.changePosition(0, -panRate);
-	      for (int i=0; i<numSpecialButtons; i++)
-	      {
-		SpecialButtonList[i]->changePosition(0, -panRate);
-	      }
-	    }	    
-	  }
-	  else if (SpecialButtonList[i]->getID()==-3)
-	  {
-	    if (shifty+panRate < 256)
-	    {
-	      glTranslatef(0., -panRate, 0.);
-	      shifty+=panRate;
-	      PopupYes.changePosition(0, panRate);
-	      PopupNo.changePosition(0, panRate);
-	      for (int i=0; i<numSpecialButtons; i++)
-	      {
-		SpecialButtonList[i]->changePosition(0, panRate);
-	      }
-	    }	    
-	  }
-	  else if (SpecialButtonList[i]->getID()==-5)
-	  {
-	    if (shiftx-panRate > -376)
-	    {
-	      glTranslatef(-panRate, 0., 0.);
-	      shiftx+=-panRate;
-	      PopupYes.changePosition(panRate, 0);
-	      PopupNo.changePosition(panRate, 0);
-	      for (int i=0; i<numSpecialButtons; i++)
-	      {
-		SpecialButtonList[i]->changePosition(panRate, 0);
-	      }
-	    }
-	  }
-	}
+        if (SpecialButtonList[i]->onButton(x, y, shiftx, -shifty) && SpecialButtonList[i]->getButtonIsPressed() )
+        {
+          SpecialButtonList[i]->setButtonIsPressed(false);
+          if (SpecialButtonList[i]->getID()==-4)
+          {
+            if (shiftx+panRate < 500)
+            {
+              glTranslatef(panRate, 0., 0.);
+              shiftx+=panRate;
+              PopupYes.changePosition(-panRate, 0);
+              PopupNo.changePosition(-panRate, 0);
+              for (int i=0; i<numSpecialButtons; i++)
+              {
+                SpecialButtonList[i]->changePosition(-panRate, 0);
+              }
+            }
+          }
+          else if (SpecialButtonList[i]->getID()==-2)
+          {
+            if (shifty+panRate > -421)
+            {
+              glTranslatef(0., panRate, 0.);
+              shifty+=-panRate;
+              PopupYes.changePosition(0, -panRate);
+              PopupNo.changePosition(0, -panRate);
+              for (int i=0; i<numSpecialButtons; i++)
+              {
+                SpecialButtonList[i]->changePosition(0, -panRate);
+              }
+            }
+          }
+          else if (SpecialButtonList[i]->getID()==-3)
+          {
+            if (shifty+panRate < 256)
+            {
+              glTranslatef(0., -panRate, 0.);
+              shifty+=panRate;
+              PopupYes.changePosition(0, panRate);
+              PopupNo.changePosition(0, panRate);
+              for (int i=0; i<numSpecialButtons; i++)
+              {
+                SpecialButtonList[i]->changePosition(0, panRate);
+              }
+            }
+          }
+          else if (SpecialButtonList[i]->getID()==-5)
+          {
+            if (shiftx-panRate > -376)
+            {
+              glTranslatef(-panRate, 0., 0.);
+              shiftx+=-panRate;
+              PopupYes.changePosition(panRate, 0);
+              PopupNo.changePosition(panRate, 0);
+              for (int i=0; i<numSpecialButtons; i++)
+              {
+                SpecialButtonList[i]->changePosition(panRate, 0);
+              }
+            }
+          }
+        }
       }
 
 
       if ( PopupYes.onButton (x, y, shiftx, -shifty) && PopupYes.getButtonIsPressed() )
       {
-	pathDeclared = true;
-	cout << "Starting at " << IntToBuilding(Start) << ", ending at " << IntToBuilding(Finish) << endl;
-	//cout << Start << " " << Finish << endl;
+        pathDeclared = true;
+        cout << "Starting at " << IntToBuilding(Start) << ", ending at " << IntToBuilding(Finish) << endl;
+        //cout << Start << " " << Finish << endl;
 
 
-	
-	//compute shortest path here
-	vector<double> min_distance;
-	vector<int> previous;
-	a.DijkstraComputePaths(Start, B.getDistMatrix() , min_distance, previous);
-	list<int> path = a.DijkstraGetShortestPathTo(Finish, previous);
-	/*	cout << "Path : ";*/
-	arr = new int[path.size()];
-	copy(path.begin(),path.end(),arr);
-	no_of_segments=path.size();
-	/*
-	cout << "Distance from " << Start << " to " << Finish <<": " << min_distance[Finish] << endl;
 
-	cout << "Path : ";
-	copy(path.begin(), path.end(), ostream_iterator<int>(cout, " "));
-	cout << endl;
+        //compute shortest path here
+        vector<double> min_distance;
+        vector<int> previous;
+        a.DijkstraComputePaths(Start, B.getDistMatrix() , min_distance, previous);
+        list<int> path = a.DijkstraGetShortestPathTo(Finish, previous);
+        /*      cout << "Path : ";*/
+        arr = new int[path.size()];
+        copy(path.begin(),path.end(),arr);
+        no_of_segments=path.size();
+        /*
+        cout << "Distance from " << Start << " to " << Finish <<": " << min_distance[Finish] << endl;
+
+        cout << "Path : ";
+        copy(path.begin(), path.end(), ostream_iterator<int>(cout, " "));
+        cout << endl;
        for (unsigned int i = 0; i < path.size(); ++i)
-	  cout << arr[i] << " ";
-	  cout << endl;*/
-	b.fillPath(A,path);
-	b.display();
-	b.draw();
-	Start=Finish= -1;
-	PopupYes.setButtonIsPressed(false);
-	redrawWindow = true;
-	preferIndoors = false;
-	avoidStairs=false;
-	B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
+          cout << arr[i] << " ";
+          cout << endl;*/
+        b.fillPath(A,path);
+        b.display();
+        b.draw();
+        Start=Finish= -1;
+        PopupYes.setButtonIsPressed(false);
+        redrawWindow = true;
+        preferIndoors = false;
+        avoidStairs=false;
+        B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,false,false);
       }
 
       if ( PopupNo.onButton (x, y, shiftx, -shifty) && PopupNo.getButtonIsPressed() ){
-	Start=Finish=-1;
-	PopupNo.setButtonIsPressed(false);
-	redrawWindow = true;	
+        Start=Finish=-1;
+        PopupNo.setButtonIsPressed(false);
+        redrawWindow = true;
       }
     }
   if ( GLUT_RIGHT_BUTTON == mouseButton ){ }
@@ -662,48 +658,48 @@ void special_keyboard(int key,int x, int y)
     case GLUT_KEY_LEFT:
       if (shiftx+panRate < 500)
       {
-	glTranslatef(panRate, 0., 0.);
-	shiftx+=panRate;
-	PopupYes.changePosition(-panRate, 0);
-	PopupNo.changePosition(-panRate, 0);
-	for (int i=0; i<numSpecialButtons; i++)
-	{
-	  SpecialButtonList[i]->changePosition(-panRate, 0);
-	}
+        glTranslatef(panRate, 0., 0.);
+        shiftx+=panRate;
+        PopupYes.changePosition(-panRate, 0);
+        PopupNo.changePosition(-panRate, 0);
+        for (int i=0; i<numSpecialButtons; i++)
+        {
+          SpecialButtonList[i]->changePosition(-panRate, 0);
+        }
       }
       else
       {
-      }	
+      }
       break;
-      
+
     case GLUT_KEY_RIGHT:
       if (shiftx-panRate > -374)
       {
-	glTranslatef(-panRate, 0., 0.);
-	shiftx+=-panRate;
-	//cout << shiftx << endl;
-	PopupYes.changePosition(panRate, 0);
-	PopupNo.changePosition(panRate, 0);
-	for (int i=0; i<numSpecialButtons; i++)
-	{
-	  SpecialButtonList[i]->changePosition(panRate, 0);
-	}
+        glTranslatef(-panRate, 0., 0.);
+        shiftx+=-panRate;
+        //cout << shiftx << endl;
+        PopupYes.changePosition(panRate, 0);
+        PopupNo.changePosition(panRate, 0);
+        for (int i=0; i<numSpecialButtons; i++)
+        {
+          SpecialButtonList[i]->changePosition(panRate, 0);
+        }
       }
       else
       {
-      }	
+      }
       break;
     case GLUT_KEY_UP:
       if (shifty+panRate > -421)
       {
-	glTranslatef(0., panRate, 0.);
-	shifty+=-panRate;
-	PopupYes.changePosition(0, -panRate);
-	PopupNo.changePosition(0, -panRate);
-	for (int i=0; i<numSpecialButtons; i++)
+        glTranslatef(0., panRate, 0.);
+        shifty+=-panRate;
+        PopupYes.changePosition(0, -panRate);
+        PopupNo.changePosition(0, -panRate);
+        for (int i=0; i<numSpecialButtons; i++)
         {
-	  SpecialButtonList[i]->changePosition(0, -panRate);
-	}
+          SpecialButtonList[i]->changePosition(0, -panRate);
+        }
       }
       else
       {
@@ -712,15 +708,15 @@ void special_keyboard(int key,int x, int y)
     case GLUT_KEY_DOWN:
       if (shifty+panRate < 256)
       {
-	glTranslatef(0., -panRate, 0.);
-	shifty+=panRate;
-	//cout << shifty << endl;
-	PopupYes.changePosition(0, panRate);
-	PopupNo.changePosition(0, panRate);
-	for (int i=0; i<numSpecialButtons; i++)
-	{
-	  SpecialButtonList[i]->changePosition(0, panRate);
-	}
+        glTranslatef(0., -panRate, 0.);
+        shifty+=panRate;
+        //cout << shifty << endl;
+        PopupYes.changePosition(0, panRate);
+        PopupNo.changePosition(0, panRate);
+        for (int i=0; i<numSpecialButtons; i++)
+        {
+          SpecialButtonList[i]->changePosition(0, panRate);
+        }
       }
       else
       {
@@ -795,7 +791,7 @@ int main(){
   //preferIndoors=true;
   B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs ,false,false);
   init_gl_window();
- 
+
   return 0;
 }
 

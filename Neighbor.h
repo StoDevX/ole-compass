@@ -1,7 +1,21 @@
 #ifndef _Neighbor_
 #define _Neighbor_
 #include "Point.h"
+#include <iostream>
+using namespace std;
+#include <cmath>
+#include "texture.h"
 
+#include <vector>
+#include <string>
+#include <list>
+
+#include <set>
+#include <utility> // for pair
+#include <algorithm>
+#include <iterator>
+
+#include "opengl.h"
 
 #include <vector>
 #include <list>
@@ -34,7 +48,7 @@ class Neighbor{
   bool onNode(int x, int y, int ShiftFactorX, int ShiftFactorY);
   void setNodeIsPressed(bool newVal);
   void setoverNode(bool newVal);
-  bool getNodeIsPressed();  
+  bool getNodeIsPressed();
 };
 
 #endif // _Node_

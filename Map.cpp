@@ -1,19 +1,4 @@
-#include <iostream>
-#include <ostream>
-#include <fstream>
-#include <string>
-#include<sstream>
-using namespace std;
-#include "math.h"
-#include "Neighbor.h"
-#include "Point.h"
 #include "Map.h"
-#ifdef MACOSX
-#include<GLUT/glut.h>
-#else
-#include<GL/glut.h>
-#endif
-
 
 void drawText(double,double,const char*);
 
@@ -54,7 +39,7 @@ void Map::loadMap(const char *filename){
 	distMatrix[i].push_back(Neighbor(vertex, weight));
     }
   }
-} 
+}
 
 void Map::loadMapCalc(const char *filename){
   ifstream g(filename);
@@ -64,7 +49,7 @@ void Map::loadMapCalc(const char *filename){
   }
   g >> size;
   distMatrix.resize(size);
-  nodes = new Neighbor[size];  
+  nodes = new Neighbor[size];
   int x,y;
   Point a,b;
   double dist;
@@ -79,7 +64,7 @@ void Map::loadMapCalc(const char *filename){
     g >> visib;
     nodes[i].setVisibility(visib);
     }
-  for (int i = 0; i < size; ++i){  
+  for (int i = 0; i < size; ++i){
     g >> buffer;
     g >> numConnections;
     a=nodes[i].getLocation();
@@ -106,7 +91,7 @@ void Map::loadMapCalcWeighted(const char *filename, bool outdoor, bool stairs, b
   g >> size;
   distMatrix.clear();
   distMatrix.resize(size);
-  nodes = new Neighbor[size];  
+  nodes = new Neighbor[size];
   int x,y;
   int connectType;
   Point a,b;
@@ -122,7 +107,7 @@ void Map::loadMapCalcWeighted(const char *filename, bool outdoor, bool stairs, b
     g >> visib;
     nodes[i].setVisibility(visib);
     }
-  for (int i = 0; i < size; ++i){  
+  for (int i = 0; i < size; ++i){
     g >> buffer;
     g >> numConnections;
     a=nodes[i].getLocation();
@@ -169,13 +154,13 @@ void Map::nodeDraw(bool drawAll, int begin, int end){
   int x,y;
   char * buffer;
   for(int i = 0; i < size; ++i){
-    if (nodes[i].getVisibility()||drawAll){ 
+    if (nodes[i].getVisibility()||drawAll){
       glColor3f(.4,.4,.8);
       if (i == begin||i==end){ glColor3f(0.2,0.95,0.7);}
 	x=nodes[i].getLocation().x;
 	y=nodes[i].getLocation().y;
 
-	glBegin(GL_TRIANGLE_FAN); 
+	glBegin(GL_TRIANGLE_FAN);
 	glVertex2d(x, y);
 	for ( int i = 0; i < NUM_DIVS; ++i )
 	  glVertex2d(x + radius*cos(i*2*M_PI/(NUM_DIVS-1)),
@@ -201,7 +186,7 @@ void Map::drawConnections(const char *filename){
   int sizeSave= size;
   g >> size;
   Neighbor* nodesSave=nodes;
-  nodes = new Neighbor[size];  
+  nodes = new Neighbor[size];
   int x,y;
   int connectType;
   Point one,two;
@@ -217,7 +202,7 @@ void Map::drawConnections(const char *filename){
     g >> visib;
     nodes[i].setVisibility(visib);
     }
-  for (int i = 0; i < size; ++i){  
+  for (int i = 0; i < size; ++i){
     g >> buffer;
     g >> numConnections;
     one=nodes[i].getLocation();
@@ -236,7 +221,7 @@ void Map::drawConnections(const char *filename){
 
 
 void Map::rectangleDraw(Point a, Point b, double height,int pathType){
-  if(a.x==b.x){ a.x+=.001;}  
+  if(a.x==b.x){ a.x+=.001;}
   double deltax,deltay,ax,bx,ay,by;
   float x1,x2,x3,x4,y1,y2,y3,y4;
     bx = b.x;
@@ -250,7 +235,7 @@ void Map::rectangleDraw(Point a, Point b, double height,int pathType){
     x1=ax+deltax;
     x2=ax-deltax;
     x3=bx+deltax;
-    x4=bx-deltax;    
+    x4=bx-deltax;
 
     y1=ay+deltay;
     y2=ay-deltay;

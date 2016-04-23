@@ -1,6 +1,6 @@
 #include <iostream>
 #include "button.h"
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include <math.h>
 #include <string>
 using namespace std;
@@ -71,7 +71,7 @@ void Button::draw()
   glEnd();
   glColor3f(1., 1., 1.);
   drawText();
-  
+
 }
 
 void Button::draw(int r, int g, int b)
@@ -94,7 +94,7 @@ void Button::draw(int r, int g, int b)
   glEnd();
   glColor3f(1., 1., 1.);
   drawText();
-  
+
 }
 
 void Button::display()
@@ -107,7 +107,7 @@ bool Button::onButton(int x, int y, int ShiftFactorX, int ShiftFactorY)
   return x >= x_pos+ShiftFactorX  && y >= y_pos+ShiftFactorY &&
          x <= x_pos+ShiftFactorX + width &&
          y <= y_pos+ShiftFactorY + height;
-}   
+}
 
 void Button::setButtonIsPressed(bool newVal)
 {

@@ -1,19 +1,5 @@
 // by Olaf Hall-Holt, 2009
-#include<iostream>
-#include<fstream>
-#include<vector>
-#include<map>
-using namespace std;
-#ifdef MACOSX
-#include<GLUT/glut.h>
-#else
-#include<GL/glut.h>
-#endif
-#include<cassert>
-#include<string.h>  // for strcmp
-#include<stdlib.h>  // for exit
-#include<math.h>    // for cos, sin
-#include"texture.h"
+#include "texture.h"
 
 struct pixel {
   unsigned char red, green, blue, alpha;
@@ -269,8 +255,8 @@ int Texture::moveImgDataToGraphicsCard()
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   if ( useMipMaps ) {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); 
-    glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE); 
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
   } else glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, TEX_WIDTH, TEX_HEIGHT, 0,
                GL_RGBA, GL_UNSIGNED_BYTE, imgData);

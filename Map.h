@@ -5,8 +5,17 @@
 
 #include <vector>
 #include <list>
+#include <iostream>
+#include <ostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <cmath>
+#include "opengl.h"
+using namespace std;
 
-class Map{  
+
+class Map{
  private:
 adjacency_list_t distMatrix;
  protected:
@@ -14,7 +23,7 @@ adjacency_list_t distMatrix;
   Neighbor* nodes;
   void rectangleDraw(Point,Point,double,int);
  public:
-  Map();  
+  Map();
   int getSize();
   void loadMap(const char*);
   void loadMapCalc(const char*);
@@ -27,7 +36,7 @@ adjacency_list_t distMatrix;
   Neighbor* equateNodes(Neighbor*);
   ~Map();
 };
-  
+
 
 
 

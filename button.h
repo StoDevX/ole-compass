@@ -1,6 +1,9 @@
 #ifndef _Button_
 #define _Button_
 #include <iostream>
+#include "opengl.h"
+#include <cmath>
+#include <string>
 using namespace std;
 
 class Button
