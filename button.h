@@ -1,7 +1,6 @@
 #ifndef _Button_
 #define _Button_
 #include "opengl.h"
-#include <cmath>
 #include <iostream>
 #include <string>
 using namespace std;
@@ -12,8 +11,9 @@ protected:
   int y_pos;
   int width;
   int height;
+
   string name;
-  bool ButtonIsPressed;
+  bool isPressed;
   bool overButton;
   int ID;
 
@@ -21,17 +21,24 @@ public:
   Button();
   Button(istream &istr);
   Button(int x, int y, int w, int h, int id, string str);
-  void drawText();
+  ~Button();
+
   void draw();
   void draw(int r, int g, int b);
+  void draw(double r, double g, double b);
+
+  void drawText();
   void display();
-  ~Button();
+
   bool onButton(int x, int y, int ShiftFactorX, int ShiftFactorY);
+
   void setButtonIsPressed(bool newVal);
-  void setoverButton(bool newVal);
+  void setOverButton(bool newVal);
+
   string getName();
   int getID();
   bool getButtonIsPressed();
+
   void changePosition(int x, int y);
   void changeName(string newName);
 };

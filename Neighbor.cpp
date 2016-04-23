@@ -77,18 +77,12 @@ list<int> Neighbor::DijkstraGetShortestPathTo(int vertex,
 }
 
 bool Neighbor::onNode(int x, int y, int ShiftFactorX, int ShiftFactorY) {
-
   Point a;
   a.x = x - ShiftFactorX;
   a.y = y - ShiftFactorY;
   double radius = 12;
   double dist = a.distance(loc);
   return dist < radius;
-
-  /*
-        return x >= loc.x+ShiftFactorX  &&
-          y >= loc.y+ShiftFactorY && x <= loc.x+ShiftFactorX + 10 &&
-          y <= loc.y+ShiftFactorY + 10;*/
 }
 
 void Neighbor::setNodeIsPressed(bool newVal) { NodeIsPressed = newVal; }
@@ -96,21 +90,3 @@ void Neighbor::setNodeIsPressed(bool newVal) { NodeIsPressed = newVal; }
 void Neighbor::setoverNode(bool newVal) { overNode = newVal; }
 
 bool Neighbor::getNodeIsPressed() { return NodeIsPressed; }
-
-/*
-
-void Neighbor::display()
-{
-  glColor3f(1., 0., 0.);
-  const int NUM_DIVS = 50;
-  glBegin(GL_TRIANGLE_FAN);
-  glVertex2d(loc.x, loc.y);
-  for ( int i=0; i< NUM_DIVS; ++i)
-  {
-    glVertex2d(loc.x+5*cos(i*2*M_PI/(NUM_DIVS-1)),
-               loc.y+5*sin(i*2*M_PI/(NUM_DIVS-1)));
-  }
-  glEnd();
-}
-
-*/

@@ -23,7 +23,7 @@ Button::Button(int x, int y, int w, int h, int id, string str) {
   ID = id;
   name = str;
   overButton = false;
-  ButtonIsPressed = false;
+  isPressed = false;
 }
 
 void Button::drawText() {
@@ -32,31 +32,13 @@ void Button::drawText() {
     glutBitmapCharacter(GLUT_BITMAP_9_BY_15, ch);
 }
 
-void Button::draw() {
-  glColor3f(.8, .8, .8);
-  glBegin(GL_POLYGON);
-  glVertex2f(x_pos - 3, y_pos - 3);                  // upper left
-  glVertex2f(x_pos - 3, y_pos + height + 3);         // lower left
-  glVertex2f(x_pos + width + 3, y_pos + height + 3); // lower right
-  glVertex2f(x_pos + width + 3, y_pos - 3);          // upper right
-  glEnd();
-  if (ButtonIsPressed)
-    glColor3f(1., 1., 0.);
-  else if (overButton)
-    glColor3f(.5, .5, .5);
-  else
-    glColor3f(.1, .1, .1);
-  glBegin(GL_POLYGON);
-  glVertex2f(x_pos, y_pos);                  // upper left
-  glVertex2f(x_pos, y_pos + height);         // lower left
-  glVertex2f(x_pos + width, y_pos + height); // lower right
-  glVertex2f(x_pos + width, y_pos);          // upper right
-  glEnd();
-  glColor3f(1., 1., 1.);
-  drawText();
-}
+void Button::draw() { draw(.1, .1, .1); }
 
 void Button::draw(int r, int g, int b) {
+  draw((double)r, (double)g, (double)b);
+}
+
+void Button::draw(double r, double g, double b) {
   glColor3f(.8, .8, .8);
   glBegin(GL_POLYGON);
   glVertex2f(x_pos - 3, y_pos - 3);                  // upper left
@@ -64,7 +46,7 @@ void Button::draw(int r, int g, int b) {
   glVertex2f(x_pos + width + 3, y_pos + height + 3); // lower right
   glVertex2f(x_pos + width + 3, y_pos - 3);          // upper right
   glEnd();
-  if (ButtonIsPressed)
+  if (isPressed)
     glColor3f(1., 1., 0.);
   else if (overButton)
     glColor3f(.5, .5, .5);
@@ -88,15 +70,15 @@ bool Button::onButton(int x, int y, int ShiftFactorX, int ShiftFactorY) {
          y <= y_pos + ShiftFactorY + height;
 }
 
-void Button::setButtonIsPressed(bool newVal) { ButtonIsPressed = newVal; }
+void Button::setButtonIsPressed(bool newVal) { isPressed = newVal; }
 
-void Button::setoverButton(bool newVal) { overButton = newVal; }
+void Button::setOverButton(bool newVal) { overButton = newVal; }
 
 string Button::getName() { return name; }
 
 int Button::getID() { return ID; }
 
-bool Button::getButtonIsPressed() { return ButtonIsPressed; }
+bool Button::getButtonIsPressed() { return isPressed; }
 
 void Button::changePosition(int x, int y) {
   x_pos += x;
