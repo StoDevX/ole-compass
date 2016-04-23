@@ -26,10 +26,10 @@ void loadMap(const char *filename, adjacency_list_t &vec, int &numNodes,
   for (int i = 0; i < numNodes; ++i) {
     g >> x >> y;
     Nodes[i].setLocation(x, y);
-	int numConnections;
+    int numConnections;
     g >> numConnections;
     for (int j = 0; j < numConnections; ++j) {
-	  int vertex, weight;
+      int vertex, weight;
       g >> vertex >> weight;
       vec[i].push_back(Neighbor(vertex, weight));
     }
