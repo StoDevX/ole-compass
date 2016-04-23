@@ -3,29 +3,29 @@
 #include "Point.h"
 #include <iostream>
 using namespace std;
-#include <cmath>
 #include "texture.h"
+#include <cmath>
 
-#include <vector>
-#include <string>
 #include <list>
+#include <string>
+#include <vector>
 
-#include <set>
-#include <utility> // for pair
 #include <algorithm>
 #include <iterator>
+#include <set>
+#include <utility> // for pair
 
 #include "opengl.h"
 
-#include <vector>
 #include <list>
+#include <vector>
 
 class Neighbor;
 
-typedef vector<vector<Neighbor> > adjacency_list_t;
+typedef vector<vector<Neighbor>> adjacency_list_t;
 
-class Neighbor{
- protected:
+class Neighbor {
+protected:
   Point loc;
   char id[4];
   int target;
@@ -33,17 +33,19 @@ class Neighbor{
   bool visible;
   bool overNode;
   bool NodeIsPressed;
- public:
+
+public:
   Neighbor(int, double);
   Neighbor();
   void setLocation(int, int);
-  void setID(const char*);
+  void setID(const char *);
   void setVisibility(bool);
-  char* getID();
+  char *getID();
   Point getLocation();
   bool getVisibility();
-  void DijkstraComputePaths(int source,const adjacency_list_t&, vector<double>&, vector<int>&);
-  list<int> DijkstraGetShortestPathTo(int, const vector<int>&);
+  void DijkstraComputePaths(int source, const adjacency_list_t &,
+                            vector<double> &, vector<int> &);
+  list<int> DijkstraGetShortestPathTo(int, const vector<int> &);
   void display();
   bool onNode(int x, int y, int ShiftFactorX, int ShiftFactorY);
   void setNodeIsPressed(bool newVal);

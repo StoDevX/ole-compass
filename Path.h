@@ -1,23 +1,24 @@
 #ifndef _Path_
 #define _Path_
 #include "Map.h"
+#include <cmath>
+#include <fstream>
 #include <iostream>
 #include <ostream>
-#include <fstream>
-#include <string>
 #include <sstream>
-#include <cmath>
+#include <string>
 using namespace std;
 #include "Neighbor.h"
 #include "Point.h"
 
 #include "opengl.h"
 
-class Path: public Map{
+class Path : public Map {
 protected:
   int distance;
   unsigned int pathsize;
- public:
+
+public:
   Path();
   void fillPath(Map, list<int>);
   void emptyPath();

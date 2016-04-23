@@ -1,26 +1,26 @@
 #ifndef _Button_
 #define _Button_
-#include <iostream>
 #include "opengl.h"
 #include <cmath>
+#include <iostream>
 #include <string>
 using namespace std;
 
-class Button
-{
- protected:
+class Button {
+protected:
   int x_pos;
   int y_pos;
   int width;
   int height;
-  char* name;
+  char *name;
   bool ButtonIsPressed;
   bool overButton;
   int ID;
- public:
+
+public:
   Button();
-  Button(istream& istr);
-  Button(int x, int y, int w, int h, int id, const char* str);
+  Button(istream &istr);
+  Button(int x, int y, int w, int h, int id, const char *str);
   void drawText();
   void draw();
   void draw(int r, int g, int b);
@@ -29,10 +29,10 @@ class Button
   bool onButton(int x, int y, int ShiftFactorX, int ShiftFactorY);
   void setButtonIsPressed(bool newVal);
   void setoverButton(bool newVal);
-  char* getName();
+  char *getName();
   int getID();
   bool getButtonIsPressed();
   void changePosition(int x, int y);
-  void changeName(const char* newName);
+  void changeName(const char *newName);
 };
 #endif
