@@ -1,9 +1,4 @@
-#include <iostream>
 #include "button.h"
-#include <GLUT/glut.h>
-#include <math.h>
-#include <string>
-using namespace std;
 
 Button::Button()
 {
