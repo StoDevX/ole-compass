@@ -26,5 +26,8 @@
 > distinct manners based on the user's preference.
 
 
-Originally from [the OleCompass page on the CS
-Wiki](http://www.cs.stolaf.edu/wiki/index.php/OleCompass)
+Originally from [the OleCompass page on the CS Wiki](http://www.cs.stolaf.edu/wiki/index.php/OleCompass)
+
+To compile the code, simply type `make mapDraw` in the command line. To run it, enter `./mapDraw`, without quotations.
+
+The input files are StoMap.pam, EntireMapCalc.txt, buttonList.txt, and SpecialButtons.txt.

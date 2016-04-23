@@ -1,0 +1,41 @@
+33
+207 353 20 60 18 Mellby
+638 260	60 20 129 Rolvaag
+383 135 60 20 135 Boe
+504 143 100 20 133 BuntrockSouth
+462 444 60 20 23 TomsonEast
+357 451 60 20 22 TomsonWest
+246 196 60 20 16 Theater
+679 483 60 20 81 HollandN
+700 531	60 20 82 HollandS
+486 534 60 20 78 RegentsMath
+245 518 60 20 217 Larson
+070 102 100 20 151 Christiansen
+114 189 60 20 49 Skifter
+-36 405 60 20 55 Hoyme
+-21 758 60 20 62 HillKitt
+890 608 60 20 94 OldMain
+830 534 60 20 97 Steensland
+890 -173 60 20 200 Thorson
+736 -282 60 20 197 Ellingson
+617 -231 60 20 192 Mohn
+415 -210 60 20 182 Kildahl
+249 -20 60 20 146 Dittman
+143 7 90 20 153 HallOfMusic
+-237 145 60 20 173 Ytterboe
+-150 -131 60 20 160 Skoglund
+272 -346 60 20 186  RandW
+399 -316 60 20 185  RandE
+575 585	 100 20 85   RegentsScience
+712 649	 90 20 89   RegentsMid
+799 667	 90 20 223  RegentsEast
+507 109	 100 20 140  BuntrockNorth
+9   210	 100 20	50   ChristiansenS
+169 -42	 100 20	150  GranskouTunnel
+
+
+
+
+
+
+
