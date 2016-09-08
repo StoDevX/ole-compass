@@ -1,14 +1,14 @@
 #ifndef _Path_
 #define _Path_
 #include "Map.h"
+#include "Neighbor.h"
+#include "Point.h"
 #include <cmath>
 #include <fstream>
 #include <iostream>
 #include <ostream>
 #include <sstream>
 #include <string>
-#include "Neighbor.h"
-#include "Point.h"
 
 #include "opengl.h"
 

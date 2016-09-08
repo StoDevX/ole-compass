@@ -1,9 +1,9 @@
 #ifndef _Neighbor_
 #define _Neighbor_
 #include "Point.h"
-#include <iostream>
 #include "texture.h"
 #include <cmath>
+#include <iostream>
 
 #include <algorithm>
 #include <iterator>

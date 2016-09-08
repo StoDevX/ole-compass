@@ -1,10 +1,10 @@
-#include <fstream>
-#include <iostream>
 #include "opengl.h"
 #include "texture.h"
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
+#include <iostream>
 #include <sstream>
 
 #include "Map.h"
@@ -70,7 +70,8 @@ Button PopupNo(300, 300, 60, 30, -1, "No");
 void loadButtons(std::string file) {
   ifstream infile(file);
   if (!infile.good()) {
-    std::cerr << "Warning: Unable to open " << file << ", ignoring it." << std::endl;
+    std::cerr << "Warning: Unable to open " << file << ", ignoring it."
+              << std::endl;
   }
   infile >> numButtons;
 
@@ -86,7 +87,8 @@ void loadButtons(std::string file) {
 void loadSpecialButtons(std::string file) {
   ifstream infile(file);
   if (!infile.good()) {
-    std::cerr << "Warning: Unable to open " << file << ", ignoring it." << std::endl;
+    std::cerr << "Warning: Unable to open " << file << ", ignoring it."
+              << std::endl;
   }
   infile >> numSpecialButtons;
 
@@ -483,7 +485,7 @@ void mouse(int mouseButton, int state, int x, int y) {
           PopupYes.getButtonIsPressed()) {
         pathDeclared = true;
         std::cout << "Starting at " << IntToBuilding(Start) << ", ending at "
-             << IntToBuilding(Finish) << std::endl;
+                  << IntToBuilding(Finish) << std::endl;
         // std::cout << Start << " " << Finish << std::endl;
 
         // compute shortest path here

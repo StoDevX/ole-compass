@@ -47,8 +47,8 @@ Image::Image(std::string fname) {
   std::string hdr;
   f >> hdr;
   if ((hdr != "P6") && (hdr != "P7")) {
-    std::cerr << "Error:  invalid header type-- expecting P6 or P7, but got " << hdr
-         << std::endl;
+    std::cerr << "Error:  invalid header type-- expecting P6 or P7, but got "
+              << hdr << std::endl;
     exit(-1);
   }
   f >> std::ws; // special function of istream to get rid of whitespace
@@ -85,25 +85,27 @@ Image::Image(std::string fname) {
       else if (keyword == "TUPLTYPE")
         f >> tupletype; // ignored
       else {
-        std::cerr << "Error:  unrecognized keyword in PAM image header: " << keyword
-             << " exiting." << std::endl;
+        std::cerr << "Error:  unrecognized keyword in PAM image header: "
+                  << keyword << " exiting." << std::endl;
         exit(-1);
       }
       f >> keyword;
     }
     if ("ENDHDR" != keyword) {
-      std::cerr << "Error reading image file, perhaps the header is not correctly "
-              "formed?"
-           << std::endl;
+      std::cerr
+          << "Error reading image file, perhaps the header is not correctly "
+             "formed?"
+          << std::endl;
       exit(-1);
     }
     f.get();
   }
   if (255 != maxval) {
-    std::cerr << "Error:  invalid maxval of " << maxval
-         << " for incoming image (expected 255).  To fix, use convert with "
-            "-depth 8."
-         << std::endl;
+    std::cerr
+        << "Error:  invalid maxval of " << maxval
+        << " for incoming image (expected 255).  To fix, use convert with "
+           "-depth 8."
+        << std::endl;
     exit(-1);
   }
   data = new pixel[width * height];
@@ -128,7 +130,7 @@ Image::Image(std::string fname) {
     f.read((char *)data, width * height * sizeof(pixel));
   } else {
     std::cerr << "Error:  invalid depth of " << depth
-         << " for incoming image (expected 1, 2, 3, or 4)." << std::endl;
+              << " for incoming image (expected 1, 2, 3, or 4)." << std::endl;
     exit(-1);
   }
   if (false) {
@@ -171,11 +173,11 @@ void Image::print() {
 }
 
 struct Texture {
-  std::map<int, unsigned> win2id;     // id(s) of this texture, indexed by window id
-  int TEX_WIDTH, TEX_HEIGHT;     // actual size of the texture map (2^n)
-  pixel *imgData;                // pixels in the image
-  float widthRatio, heightRatio; // how much of the actual size is used
-  Texture(std::string filename);      // read in an image file
+  std::map<int, unsigned> win2id; // id(s) of this texture, indexed by window id
+  int TEX_WIDTH, TEX_HEIGHT;      // actual size of the texture map (2^n)
+  pixel *imgData;                 // pixels in the image
+  float widthRatio, heightRatio;  // how much of the actual size is used
+  Texture(std::string filename);  // read in an image file
   Texture(const Texture &t)
       : win2id(t.win2id), TEX_WIDTH(t.TEX_WIDTH), TEX_HEIGHT(t.TEX_HEIGHT),
         widthRatio(t.widthRatio), heightRatio(t.heightRatio) {
@@ -201,7 +203,7 @@ std::vector<Texture> globalTexture;
 std::map<const std::string, int> textureFileLookup;
 
 std::pair<double, double> rotatePt(double x0, double y0, double x, double y,
-                              double theta) {
+                                   double theta) {
   double dx = x - x0;
   double dy = y - y0;
   double xp = dx * cos(theta) + dy * sin(theta);
@@ -232,10 +234,12 @@ void drawTexture(int texNum, double x, double y, double width, double height,
     // compute the result of rotating around the center of this box
     double x0 = x + 0.5 * width, y0 = y + 0.5 * height;
     std::pair<double, double> p0 = rotatePt(x0, y0, x, y, rotationAngle);
-    std::pair<double, double> p1 = rotatePt(x0, y0, x + width, y, rotationAngle);
+    std::pair<double, double> p1 =
+        rotatePt(x0, y0, x + width, y, rotationAngle);
     std::pair<double, double> p2 =
         rotatePt(x0, y0, x + width, y + height, rotationAngle);
-    std::pair<double, double> p3 = rotatePt(x0, y0, x, y + height, rotationAngle);
+    std::pair<double, double> p3 =
+        rotatePt(x0, y0, x, y + height, rotationAngle);
     glBegin(GL_QUADS);
     glTexCoord2f(0, 0);
     glVertex2f(p0.first, p0.second);
@@ -308,7 +312,8 @@ Texture::Texture(std::string filename) {
 }
 
 int loadTexture(std::string filename) {
-  std::map<const std::string, int>::iterator iter = textureFileLookup.find(filename);
+  std::map<const std::string, int>::iterator iter =
+      textureFileLookup.find(filename);
   if (iter == textureFileLookup.end()) {
     int currNum = globalTexture.size();
     globalTexture.push_back(Texture(filename)); // create the texture

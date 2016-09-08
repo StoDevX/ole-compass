@@ -62,7 +62,9 @@ void Button::draw(double r, double g, double b) {
   drawText();
 }
 
-void Button::display() { std::cout << name << " " << x_pos << " " << y_pos << std::endl; }
+void Button::display() {
+  std::cout << name << " " << x_pos << " " << y_pos << std::endl;
+}
 
 bool Button::onButton(int x, int y, int ShiftFactorX, int ShiftFactorY) {
   return x >= x_pos + ShiftFactorX && y >= y_pos + ShiftFactorY &&

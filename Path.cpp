@@ -34,7 +34,7 @@ void Path::emptyPath() {
 
 void Path::display() {
   std::cout << "Distance from " << nodes[0].getID() << " to "
-       << nodes[pathsize - 1].getID() << ": ";
+            << nodes[pathsize - 1].getID() << ": ";
   std::cout << distance << std::endl;
   std::cout << "Route: ";
   for (unsigned int i = 0; i < pathsize; ++i) {

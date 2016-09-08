@@ -1,8 +1,8 @@
 #ifndef _Point_
 #define _Point_
 
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 struct Point {
   double x;

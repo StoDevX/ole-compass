@@ -14,7 +14,8 @@ adjacency_list_t Map::getDistMatrix() { return distMatrix; }
 void Map::loadMap(std::string filename) {
   ifstream g(filename);
   if (!g.good()) {
-    std::cerr << "Warning: Unable to open " << filename << ", ignoring it." << std::endl;
+    std::cerr << "Warning: Unable to open " << filename << ", ignoring it."
+              << std::endl;
     return;
   }
   int x, y;
@@ -39,7 +40,8 @@ void Map::loadMap(std::string filename) {
 void Map::loadMapCalc(std::string filename) {
   ifstream g(filename);
   if (!g.good()) {
-    std::cerr << "Warning: Unable to open " << filename << ", ignoring it." << std::endl;
+    std::cerr << "Warning: Unable to open " << filename << ", ignoring it."
+              << std::endl;
     return;
   }
   g >> size;
@@ -80,7 +82,8 @@ void Map::loadMapCalcWeighted(std::string filename, bool outdoor, bool stairs,
     delete[] nodes;
   }
   if (!g.good()) {
-    std::cerr << "Warning: Unable to open " << filename << ", ignoring it." << std::endl;
+    std::cerr << "Warning: Unable to open " << filename << ", ignoring it."
+              << std::endl;
     return;
   }
   g >> size;
@@ -180,7 +183,8 @@ void Map::nodeDraw(bool drawAll, int begin, int end) {
 void Map::drawConnections(std::string filename) {
   ifstream g(filename);
   if (!g.good()) {
-    std::cerr << "Warning: Unable to open " << filename << ", ignoring it." << std::endl;
+    std::cerr << "Warning: Unable to open " << filename << ", ignoring it."
+              << std::endl;
     return;
   }
   int sizeSave = size;
