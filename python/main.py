@@ -16,6 +16,7 @@ from neighbor import Neighbor
 from map import Map
 from path import Path
 from button import Button
+from copy import deepcopy
 
 ENTIRE_MAP_PATH = '../data/entireMapCalc.txt'
 NORMAL_BUTTONS_PATH = '../data/buttonList.txt'
@@ -57,30 +58,28 @@ finish = -1
 # button info
 normal_buttons = []
 special_buttons = []
-NodeList = [None for i in range(228)]
+NodeList = []
 
 popup_yes = Button(200, 300, 60, 30, -1, "Yes")
 popup_no = Button(300, 300, 60, 30, -1, "No")
 
-def base_load_buttons(filename, btnList):
+def load_buttons_from_file(filename):
+  btnlist = []
   with open(filename, 'r') as infile:
-    btnCount = int(infile.readline())
-
-    for i in range(btnCount):
-      line = infile.readline()
+    _ = infile.readline()
+    for line in infile:
       x, y, w, h, id, name = line.split()
-      btnList.append(Button(x, y, w, h, id, name))
+      btnlist.append(Button(x, y, w, h, id, name))
+  return btnlist
 
 
-def load_buttons(filename):
+def load_normal_buttons(filename):
   global normal_buttons
-  # print(normal_buttons)
-  base_load_buttons(filename, normal_buttons)
-  # print(normal_buttons)
+  normal_buttons = load_buttons_from_file(filename)
 
 def load_special_buttons(filename):
   global special_buttons
-  base_load_buttons(filename, special_buttons)
+  special_buttons = load_buttons_from_file(filename)
 
 
 def int_to_building(x):
@@ -176,10 +175,7 @@ def print_path():
   if finish is not -1:
     print("Selection Finished!")
     selection_finished = True
-    print(selection_finished)
-    # print( "Starting at " , int_to_building(start) , ", ending at " ,
-    # int_to_building(finish) )
-    # print( start , " " , finish )
+    print( "Starting at {} ({}), ending at {} ({})".format(int_to_building(start), start, int_to_building(finish), finish))
 
 def fill_path(x):
   global start, finish
@@ -472,11 +468,10 @@ def init_gl_window():
 def main():
   global NodeList
   global_map_a.load_map_calc(ENTIRE_MAP_PATH)
-  global_map_a.equate_nodes(NodeList)
-  load_buttons(NORMAL_BUTTONS_PATH)
+  NodeList = deepcopy(global_map_a.nodes)
+  load_normal_buttons(NORMAL_BUTTONS_PATH)
   load_special_buttons(SPECIAL_BUTTONS_PATH)
-  global_map_b.load_map_calc_weighted(ENTIRE_MAP_PATH, prefer_indoors, avoid_stairs,
-                        False, False)
+  global_map_b.load_map_calc_weighted(ENTIRE_MAP_PATH, prefer_indoors, avoid_stairs, False, False)
   init_gl_window()
 
 if __name__ == '__main__':

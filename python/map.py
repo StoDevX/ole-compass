@@ -1,4 +1,5 @@
 from neighbor import Neighbor
+from copy import deepcopy
 from collections import defaultdict
 from point import distance
 from helpers import draw_text, draw_rectangle
@@ -9,8 +10,7 @@ NUM_DIVS = 50
 
 class Map(object):
   def __init__(self):
-    self.size = 0
-    self.nodes = []#defaultdict(Neighbor)
+    self.nodes = []
     self.dist_matrix = defaultdict(list)
 
 
@@ -161,7 +161,5 @@ class Map(object):
           draw_rectangle(one, two, 1, connectType)
 
 
-  def equate_nodes(self, other):
-    for i in range(self.size):
-      other[i] = nodes[i]
-    return other
+  def copy_nodes(self, other):
+    return deepcopy(self.nodes)
