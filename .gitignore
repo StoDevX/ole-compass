@@ -1,2 +1,3 @@
 *.o
 mapDraw
+__pycache__
