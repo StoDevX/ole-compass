@@ -20,7 +20,6 @@ class Button(object):
     def __str__(self):
         return "{name} {x} {y}".format(self)
 
-
     def draw(self, r=0.1, g=0.1, b=0.1):
         glColor3f(.8, .8, .8)
         glBegin(GL_POLYGON)
@@ -36,17 +35,16 @@ class Button(object):
         else:
             glColor3f(r, g, b)
         glBegin(GL_POLYGON)
-        glVertex2f(self.x, self.y)                  # upper left
-        glVertex2f(self.x, self.y + self.height)         # lower left
+        glVertex2f(self.x, self.y)                            # upper left
+        glVertex2f(self.x, self.y + self.height)              # lower left
         glVertex2f(self.x + self.width, self.y + self.height) # lower right
-        glVertex2f(self.x + self.width, self.y)          # upper right
+        glVertex2f(self.x + self.width, self.y)               # upper right
         glEnd()
         glColor3f(1., 1., 1.)
         draw_text(self.x, self.y, self.name)
 
-
     def on_button(self, x, y, shift_factor_x=0, shift_factor_y=0):
         return (x >= self.x + shift_factor_x and
                 y >= self.y + shift_factor_y and
-                x <= self.x + shift_factor_x + width and
-                y <= self.y + shift_factor_y + height)
+                x <= self.x + shift_factor_x + self.width and
+                y <= self.y + shift_factor_y + self.height)

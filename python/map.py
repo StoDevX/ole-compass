@@ -14,7 +14,7 @@ class Map(object):
     self.dist_matrix = defaultdict(list)
 
 
-  def __getitem__(self, key):
+  def __getitem__(self, i):
     return self.nodes[i]
 
 

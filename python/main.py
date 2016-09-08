@@ -1,9 +1,13 @@
 import sys
-from OpenGL.GL import glClear, GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, glColor3f
+from OpenGL.GL import glClear, GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, glColor3f, \
+                      glClearColor, glMatrixMode, glLoadIdentity, glOrtho, \
+                      GL_PROJECTION, glBlendFunc, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, \
+                      glEnable, GL_BLEND, glViewport
 from OpenGL.GLUT import GLUT_RGBA, GLUT_DOUBLE, GLUT_DEPTH, glutSwapBuffers, \
                         glutInit, glutInitDisplayMode, glutCreateWindow, glutDisplayFunc, \
                         glutMainLoop, glutInitWindowSize, glutInitWindowPosition, \
                         glutSpecialFunc, glutMouseFunc, glutMotionFunc, \
+                        glutPostRedisplay, glutReshapeFunc, \
                         GLUT_LEFT_BUTTON, GLUT_DOWN, \
                         GLUT_KEY_RIGHT, GLUT_KEY_LEFT, GLUT_KEY_UP, GLUT_KEY_DOWN
 
@@ -219,7 +223,7 @@ def mouse(mouse_button, state, x, y):
           print_path()
           btn.is_pressed = False
 
-      for node in global_map_a:
+      for i, node in enumerate(global_map_a):
         if node.on_node(x, y, shift_x, -shift_y) and node.is_pressed:
           print("Node", i, "selected")
           fill_path(i)
@@ -352,14 +356,23 @@ def mouse(mouse_button, state, x, y):
 
 def mouse_motion(x, y):
   for btn in normal_buttons:
-    if btn.is_pressed():
+    if btn.is_pressed:
       ...
+    elif btn.on_button(x, y):
+      print(btn)
+      btn.over_button = True
+    else:
+      btn.over_button = False
   for btn in special_buttons:
-    if btn.is_pressed():
+    if btn.is_pressed:
       ...
-  if popup_yes.is_pressed():
+    elif btn.on_button(x, y):
+      btn.over_button = True
+    else:
+      btn.over_button = False
+  if popup_yes.is_pressed:
     ...
-  elif popup_no.is_pressed():
+  elif popup_no.is_pressed:
     ...
   for node in global_map_a:
     if node.is_pressed():
@@ -410,29 +423,29 @@ def special_keyboard(key, x, y):
   glutPostRedisplay()
 
 
-# def reshape(w, h):
-#   glViewport(0, 0, w, h)
-#   WIDTH = w
-#   HEIGHT = h
-#   glMatrixMode(GL_PROJECTION)
-#   glLoadIdentity()
-#   glOrtho(0, WIDTH - 1, HEIGHT - 1, 0, -1, 1)
+def reshape(w, h):
+  glViewport(0, 0, w, h)
+  WIDTH = w
+  HEIGHT = h
+  glMatrixMode(GL_PROJECTION)
+  glLoadIdentity()
+  glOrtho(0, WIDTH - 1, HEIGHT - 1, 0, -1, 1)
 
 
 # the init function sets up the graphics card to draw properly
 def init():
   # clear the window to black
-  # glClearColor(0.0, 0.0, 0.0, 1.0)
-  # glClear(GL_COLOR_BUFFER_BIT)
+  glClearColor(0.0, 0.0, 0.0, 1.0)
+  glClear(GL_COLOR_BUFFER_BIT)
 
-  # # set up the coordinate system:  number of pixels along x and y
-  # glMatrixMode(GL_PROJECTION)
-  # glLoadIdentity()
-  # glOrtho(0., WIDTH - 1, HEIGHT - 1, 0., -1.0, 1.0)
+  # set up the coordinate system:  number of pixels along x and y
+  glMatrixMode(GL_PROJECTION)
+  glLoadIdentity()
+  glOrtho(0., WIDTH - 1, HEIGHT - 1, 0., -1.0, 1.0)
 
-  # # allow blending (for transparent textures)
-  # glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-  # glEnable(GL_BLEND)
+  # allow blending (for transparent textures)
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+  glEnable(GL_BLEND)
 
   # welcome message
   print("Welcome to Ole Compass.")
@@ -450,7 +463,7 @@ def init_gl_window():
   # campusmap = loadTexture(texturePath) # key to textures:  load them!
 
   glutDisplayFunc(drawWindow)
-  # glutReshapeFunc(reshape)
+  glutReshapeFunc(reshape)
   glutSpecialFunc(special_keyboard)
   glutMouseFunc(mouse)
   glutMotionFunc(mouse_motion)
