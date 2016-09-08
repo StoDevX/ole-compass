@@ -1,6 +1,6 @@
 #include "Path.h"
 
-void drawText(double, double, string);
+void drawText(double, double, std::string);
 
 Path::Path() : Map() {
   distance = 0;
@@ -33,14 +33,14 @@ void Path::emptyPath() {
 }
 
 void Path::display() {
-  cout << "Distance from " << nodes[0].getID() << " to "
+  std::cout << "Distance from " << nodes[0].getID() << " to "
        << nodes[pathsize - 1].getID() << ": ";
-  cout << distance << endl;
-  cout << "Route: ";
+  std::cout << distance << std::endl;
+  std::cout << "Route: ";
   for (unsigned int i = 0; i < pathsize; ++i) {
-    cout << nodes[i].getID() << " ";
+    std::cout << nodes[i].getID() << " ";
   }
-  cout << endl;
+  std::cout << std::endl;
 }
 
 int Path::getDistance() { return distance; }

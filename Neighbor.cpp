@@ -22,13 +22,13 @@ void Neighbor::setLocation(int x, int y) {
   loc.y = y;
 }
 
-void Neighbor::setID(string a) { id = a; }
+void Neighbor::setID(std::string a) { id = a; }
 
 void Neighbor::setVisibility(bool vis) { visible = vis; }
 
 bool Neighbor::getVisibility() { return visible; }
 
-string Neighbor::getID() { return id; }
+std::string Neighbor::getID() { return id; }
 
 Point Neighbor::getLocation() { return loc; }
 

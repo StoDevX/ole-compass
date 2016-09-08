@@ -2,7 +2,6 @@
 #define _Point_
 
 #include <iostream>
-using namespace std;
 #include <cmath>
 
 struct Point {

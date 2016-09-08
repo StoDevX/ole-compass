@@ -2,7 +2,6 @@
 #define _Neighbor_
 #include "Point.h"
 #include <iostream>
-using namespace std;
 #include "texture.h"
 #include <cmath>
 
@@ -23,7 +22,7 @@ typedef vector<vector<Neighbor>> adjacency_list_t;
 class Neighbor {
 protected:
   Point loc;
-  string id;
+  std::string id;
   int target;
   double weight;
   bool visible;
@@ -34,9 +33,9 @@ public:
   Neighbor(int, double);
   Neighbor();
   void setLocation(int, int);
-  void setID(string);
+  void setID(std::string);
   void setVisibility(bool);
-  string getID();
+  std::string getID();
   Point getLocation();
   bool getVisibility();
   void DijkstraComputePaths(int source, const adjacency_list_t &,

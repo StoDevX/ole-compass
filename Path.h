@@ -7,7 +7,6 @@
 #include <ostream>
 #include <sstream>
 #include <string>
-using namespace std;
 #include "Neighbor.h"
 #include "Point.h"
 

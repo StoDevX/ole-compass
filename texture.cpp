@@ -15,7 +15,7 @@ class Image {
 
 public:
   Image(unsigned w, unsigned h, unsigned d);
-  Image(string fname);
+  Image(std::string fname);
 
   unsigned getWidth() { return width; }
   unsigned getHeight() { return height; }
@@ -38,20 +38,20 @@ Image::Image(unsigned w, unsigned h, unsigned d) {
   data = new pixel[width * height];
 }
 
-Image::Image(string fname) {
-  ifstream f(fname);
+Image::Image(std::string fname) {
+  std::ifstream f(fname);
   if (!f.good()) {
-    cerr << "Error:  could not open file " << fname << endl;
+    std::cerr << "Error:  could not open file " << fname << std::endl;
     exit(-1);
   }
-  string hdr;
+  std::string hdr;
   f >> hdr;
   if ((hdr != "P6") && (hdr != "P7")) {
-    cerr << "Error:  invalid header type-- expecting P6 or P7, but got " << hdr
-         << endl;
+    std::cerr << "Error:  invalid header type-- expecting P6 or P7, but got " << hdr
+         << std::endl;
     exit(-1);
   }
-  f >> ws; // special function of istream to get rid of whitespace
+  f >> std::ws; // special function of istream to get rid of whitespace
   while (f.peek() == '#')
     f.ignore(1024, '\n');
   int maxval = 0;
@@ -70,7 +70,7 @@ Image::Image(string fname) {
                    TUPLTYPE GRAYSCALE_ALPHA
                    ENDHDR
            */
-    string keyword, tupletype;
+    std::string keyword, tupletype;
     f >> keyword;
     int counter = 0;
     while (keyword != "ENDHDR" && ++counter < 100) {
@@ -85,25 +85,25 @@ Image::Image(string fname) {
       else if (keyword == "TUPLTYPE")
         f >> tupletype; // ignored
       else {
-        cerr << "Error:  unrecognized keyword in PAM image header: " << keyword
-             << " exiting." << endl;
+        std::cerr << "Error:  unrecognized keyword in PAM image header: " << keyword
+             << " exiting." << std::endl;
         exit(-1);
       }
       f >> keyword;
     }
     if ("ENDHDR" != keyword) {
-      cerr << "Error reading image file, perhaps the header is not correctly "
+      std::cerr << "Error reading image file, perhaps the header is not correctly "
               "formed?"
-           << endl;
+           << std::endl;
       exit(-1);
     }
     f.get();
   }
   if (255 != maxval) {
-    cerr << "Error:  invalid maxval of " << maxval
+    std::cerr << "Error:  invalid maxval of " << maxval
          << " for incoming image (expected 255).  To fix, use convert with "
             "-depth 8."
-         << endl;
+         << std::endl;
     exit(-1);
   }
   data = new pixel[width * height];
@@ -127,8 +127,8 @@ Image::Image(string fname) {
   } else if (4 == depth) { // assume RGBA
     f.read((char *)data, width * height * sizeof(pixel));
   } else {
-    cerr << "Error:  invalid depth of " << depth
-         << " for incoming image (expected 1, 2, 3, or 4)." << endl;
+    std::cerr << "Error:  invalid depth of " << depth
+         << " for incoming image (expected 1, 2, 3, or 4)." << std::endl;
     exit(-1);
   }
   if (false) {
@@ -141,41 +141,41 @@ Image::Image(string fname) {
 
 void Image::print() {
   if (3 == depth) { // assume it was a PPM
-    cout << "P6" << endl;
-    cout << width << " " << height << endl;
-    cout << 255 << endl;
+    std::cout << "P6" << std::endl;
+    std::cout << width << " " << height << std::endl;
+    std::cout << 255 << std::endl;
     for (unsigned i = 0; i < width * height; ++i) {
-      cout.put(data[i].red);
-      cout.put(data[i].green);
-      cout.put(data[i].blue);
+      std::cout.put(data[i].red);
+      std::cout.put(data[i].green);
+      std::cout.put(data[i].blue);
     }
   } else { // assume it was a PAM
-    cout << "P7" << endl;
-    cout << "WIDTH " << width << endl;
-    cout << "HEIGHT " << height << endl;
-    cout << "DEPTH " << depth << endl;
-    cout << "MAXVAL 255" << endl;
+    std::cout << "P7" << std::endl;
+    std::cout << "WIDTH " << width << std::endl;
+    std::cout << "HEIGHT " << height << std::endl;
+    std::cout << "DEPTH " << depth << std::endl;
+    std::cout << "MAXVAL 255" << std::endl;
     if (2 == depth)
-      cout << "TUPLTYPE GRAYSCALE_ALPHA" << endl;
+      std::cout << "TUPLTYPE GRAYSCALE_ALPHA" << std::endl;
     else
-      cout << "TUPLTYPE RGB_ALPHA" << endl;
-    cout << "ENDHDR" << endl;
+      std::cout << "TUPLTYPE RGB_ALPHA" << std::endl;
+    std::cout << "ENDHDR" << std::endl;
     if (2 == depth) {
       for (unsigned i = 0; i < width * height; ++i) {
-        cout.put(data[i].green);
-        cout.put(data[i].alpha);
+        std::cout.put(data[i].green);
+        std::cout.put(data[i].alpha);
       }
     } else
-      cout.write((char *)data, width * height * sizeof(pixel));
+      std::cout.write((char *)data, width * height * sizeof(pixel));
   }
 }
 
 struct Texture {
-  map<int, unsigned> win2id;     // id(s) of this texture, indexed by window id
+  std::map<int, unsigned> win2id;     // id(s) of this texture, indexed by window id
   int TEX_WIDTH, TEX_HEIGHT;     // actual size of the texture map (2^n)
   pixel *imgData;                // pixels in the image
   float widthRatio, heightRatio; // how much of the actual size is used
-  Texture(string filename);      // read in an image file
+  Texture(std::string filename);      // read in an image file
   Texture(const Texture &t)
       : win2id(t.win2id), TEX_WIDTH(t.TEX_WIDTH), TEX_HEIGHT(t.TEX_HEIGHT),
         widthRatio(t.widthRatio), heightRatio(t.heightRatio) {
@@ -197,16 +197,16 @@ struct Texture {
   int moveImgDataToGraphicsCard();
 };
 
-vector<Texture> globalTexture;
-map<const string, int> textureFileLookup;
+std::vector<Texture> globalTexture;
+std::map<const std::string, int> textureFileLookup;
 
-pair<double, double> rotatePt(double x0, double y0, double x, double y,
+std::pair<double, double> rotatePt(double x0, double y0, double x, double y,
                               double theta) {
   double dx = x - x0;
   double dy = y - y0;
   double xp = dx * cos(theta) + dy * sin(theta);
   double yp = -dx * sin(theta) + dy * cos(theta);
-  return pair<double, double>(x0 + xp, y0 + yp);
+  return std::pair<double, double>(x0 + xp, y0 + yp);
 }
 
 void drawTexture(int texNum, double x, double y, double width, double height,
@@ -231,11 +231,11 @@ void drawTexture(int texNum, double x, double y, double width, double height,
   } else {
     // compute the result of rotating around the center of this box
     double x0 = x + 0.5 * width, y0 = y + 0.5 * height;
-    pair<double, double> p0 = rotatePt(x0, y0, x, y, rotationAngle);
-    pair<double, double> p1 = rotatePt(x0, y0, x + width, y, rotationAngle);
-    pair<double, double> p2 =
+    std::pair<double, double> p0 = rotatePt(x0, y0, x, y, rotationAngle);
+    std::pair<double, double> p1 = rotatePt(x0, y0, x + width, y, rotationAngle);
+    std::pair<double, double> p2 =
         rotatePt(x0, y0, x + width, y + height, rotationAngle);
-    pair<double, double> p3 = rotatePt(x0, y0, x, y + height, rotationAngle);
+    std::pair<double, double> p3 = rotatePt(x0, y0, x, y + height, rotationAngle);
     glBegin(GL_QUADS);
     glTexCoord2f(0, 0);
     glVertex2f(p0.first, p0.second);
@@ -283,7 +283,7 @@ int Texture::moveImgDataToGraphicsCard() {
 
 // load an image into the texture memory of the graphics card.
 //   filename   the name of a ppm or pam file
-Texture::Texture(string filename) {
+Texture::Texture(std::string filename) {
   // load the picture data into main memory
   Image img(filename);
 
@@ -307,8 +307,8 @@ Texture::Texture(string filename) {
   win2id[windowID] = id;
 }
 
-int loadTexture(string filename) {
-  map<const string, int>::iterator iter = textureFileLookup.find(filename);
+int loadTexture(std::string filename) {
+  std::map<const std::string, int>::iterator iter = textureFileLookup.find(filename);
   if (iter == textureFileLookup.end()) {
     int currNum = globalTexture.size();
     globalTexture.push_back(Texture(filename)); // create the texture
@@ -317,7 +317,7 @@ int loadTexture(string filename) {
   } else {
     int windowID = glutGetWindow();
     Texture &curr = globalTexture[iter->second];
-    map<int, unsigned>::iterator iter2 = curr.win2id.find(windowID);
+    std::map<int, unsigned>::iterator iter2 = curr.win2id.find(windowID);
     if (iter2 == curr.win2id.end()) {
       int id = curr.moveImgDataToGraphicsCard(); // redo for current window
       curr.win2id[windowID] = id;

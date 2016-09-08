@@ -3,7 +3,6 @@
 #include "opengl.h"
 #include <iostream>
 #include <string>
-using namespace std;
 
 class Button {
 protected:
@@ -12,15 +11,15 @@ protected:
   int width;
   int height;
 
-  string name;
+  std::string name;
   bool isPressed;
   bool overButton;
   int ID;
 
 public:
   Button();
-  Button(istream &istr);
-  Button(int x, int y, int w, int h, int id, string str);
+  Button(std::istream &istr);
+  Button(int x, int y, int w, int h, int id, std::string str);
   ~Button();
 
   void draw();
@@ -35,11 +34,11 @@ public:
   void setButtonIsPressed(bool newVal);
   void setOverButton(bool newVal);
 
-  string getName();
+  std::string getName();
   int getID();
   bool getButtonIsPressed();
 
   void changePosition(int x, int y);
-  void changeName(string newName);
+  void changeName(std::string newName);
 };
 #endif

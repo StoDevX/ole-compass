@@ -1,6 +1,5 @@
 #include <fstream>
 #include <iostream>
-using namespace std;
 #include "opengl.h"
 #include "texture.h"
 #include <cmath>
@@ -68,40 +67,40 @@ Neighbor NodeList[228];
 Button PopupYes(200, 300, 60, 30, -1, "Yes");
 Button PopupNo(300, 300, 60, 30, -1, "No");
 
-void loadButtons(string file) {
+void loadButtons(std::string file) {
   ifstream infile(file);
   if (!infile.good()) {
-    cerr << "Warning: Unable to open " << file << ", ignoring it." << endl;
+    std::cerr << "Warning: Unable to open " << file << ", ignoring it." << std::endl;
   }
   infile >> numButtons;
 
   for (int i = 0; i < numButtons; i++) {
     int x, y, w, h, id;
     infile >> x >> y >> w >> h >> id;
-    string ButtonName;
+    std::string ButtonName;
     infile >> ButtonName;
     ButtonList[i] = new Button(x, y, w, h, id, ButtonName);
   }
 }
 
-void loadSpecialButtons(string file) {
+void loadSpecialButtons(std::string file) {
   ifstream infile(file);
   if (!infile.good()) {
-    cerr << "Warning: Unable to open " << file << ", ignoring it." << endl;
+    std::cerr << "Warning: Unable to open " << file << ", ignoring it." << std::endl;
   }
   infile >> numSpecialButtons;
 
   for (int i = 0; i < numSpecialButtons; i++) {
     int x, y, w, h, id;
     infile >> x >> y >> w >> h >> id;
-    string ButtonName;
+    std::string ButtonName;
     infile >> ButtonName;
     SpecialButtonList[i] = new Button(x, y, w, h, id, ButtonName);
   }
 }
 
-string IntToBuilding(int x) {
-  string temp = NodeList[x].getID();
+std::string IntToBuilding(int x) {
+  std::string temp = NodeList[x].getID();
   for (int i = 0; i < numButtons; i++) {
     if (x == ButtonList[i]->getID()) {
       temp = ButtonList[i]->getName();
@@ -122,7 +121,7 @@ void drawBox(double x, double y, double width, double height) {
 
 void drawBox(double *pos) { drawBox(pos[0], pos[1], pos[2], pos[3]); }
 
-void drawText(double x, double y, string text) {
+void drawText(double x, double y, std::string text) {
   glRasterPos2f(x, y);
   for (const char ch : text)
     glutBitmapCharacter(GLUT_BITMAP_9_BY_15, ch);
@@ -227,12 +226,12 @@ void drawWindow() {
 
 void PrintPath() {
   if (Finish != -1) {
-    cout << "Selection Finished!" << endl;
+    std::cout << "Selection Finished!" << std::endl;
     selectionFinished = true;
-    cout << selectionFinished << endl;
-    // cout << "Starting at " << IntToBuilding(Start) << ", ending at " <<
-    // IntToBuilding(Finish) << endl;
-    // cout << Start << " " << Finish << endl;
+    std::cout << selectionFinished << std::endl;
+    // std::cout << "Starting at " << IntToBuilding(Start) << ", ending at " <<
+    // IntToBuilding(Finish) << std::endl;
+    // std::cout << Start << " " << Finish << std::endl;
   }
 }
 
@@ -250,9 +249,9 @@ void FillPath(int x) {
 void mouse(int mouseButton, int state, int x, int y) {
   if (GLUT_LEFT_BUTTON == mouseButton) {
     if (GLUT_DOWN == state) {
-      // This cout prints the current location of the mouse upon a click
-      // cout << x-shiftx << ", " << y+shifty << endl;
-      // cout << shiftx << ", " << shifty << endl;
+      // This std::cout prints the current location of the mouse upon a click
+      // std::cout << x-shiftx << ", " << y+shifty << std::endl;
+      // std::cout << shiftx << ", " << shifty << std::endl;
       for (int i = 0; i < numButtons; i++) {
         if (ButtonList[i]->onButton(x, y, shiftx, -shifty)) {
           ButtonList[i]->setButtonIsPressed(true);
@@ -296,7 +295,7 @@ void mouse(int mouseButton, int state, int x, int y) {
       for (int i = 0; i < numButtons; i++) {
         if (ButtonList[i]->onButton(x, y, shiftx, -shifty) &&
             ButtonList[i]->getButtonIsPressed()) {
-          cout << ButtonList[i]->getName() << " selected" << endl;
+          std::cout << ButtonList[i]->getName() << " selected" << std::endl;
           FillPath(ButtonList[i]->getID());
           PrintPath();
           ButtonList[i]->setButtonIsPressed(false);
@@ -306,7 +305,7 @@ void mouse(int mouseButton, int state, int x, int y) {
       for (int i = 0; i < A.getSize(); i++) {
         if (NodeList[i].onNode(x, y, shiftx, -shifty) &&
             NodeList[i].getNodeIsPressed()) {
-          cout << "Node " << i << " selected" << endl;
+          std::cout << "Node " << i << " selected" << std::endl;
           FillPath(i);
           PrintPath();
           NodeList[i].setNodeIsPressed(false);
@@ -316,7 +315,7 @@ void mouse(int mouseButton, int state, int x, int y) {
       // RESET BUTTON
       if (SpecialButtonList[0]->onButton(x, y, shiftx, -shifty) &&
           SpecialButtonList[0]->getButtonIsPressed()) {
-        cout << "GLOBAL RESET" << endl;
+        std::cout << "GLOBAL RESET" << std::endl;
         b.emptyPath();
         SpecialButtonList[0]->setButtonIsPressed(false);
         Start = Finish = -1;
@@ -334,13 +333,13 @@ void mouse(int mouseButton, int state, int x, int y) {
       if (SpecialButtonList[5]->onButton(x, y, shiftx, -shifty) &&
           SpecialButtonList[5]->getButtonIsPressed()) {
         if (preferIndoors == false) {
-          cout << "Prefering indoors" << endl;
+          std::cout << "Prefering indoors" << std::endl;
           preferIndoors = true;
           B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,
                                 false, false);
           SpecialButtonList[5]->setButtonIsPressed(false);
         } else if (preferIndoors == true) {
-          cout << "Not prefering indoors" << endl;
+          std::cout << "Not prefering indoors" << std::endl;
           preferIndoors = false;
           B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,
                                 false, false);
@@ -356,13 +355,13 @@ void mouse(int mouseButton, int state, int x, int y) {
       if (SpecialButtonList[7]->onButton(x, y, shiftx, -shifty) &&
           SpecialButtonList[7]->getButtonIsPressed()) {
         if (avoidStairs == true) {
-          cout << "No longer avoiding stairs" << endl;
+          std::cout << "No longer avoiding stairs" << std::endl;
           avoidStairs = false;
           B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,
                                 false, false);
           SpecialButtonList[7]->setButtonIsPressed(false);
         } else if (avoidStairs == false) {
-          cout << "Avoiding Stairs" << endl;
+          std::cout << "Avoiding Stairs" << std::endl;
           avoidStairs = true;
           B.loadMapCalcWeighted("EntireMapCalc.txt", preferIndoors, avoidStairs,
                                 false, false);
@@ -422,13 +421,13 @@ void mouse(int mouseButton, int state, int x, int y) {
           SpecialButtonList[11]->getButtonIsPressed()) {
         panRate += 5;
         SpecialButtonList[11]->setButtonIsPressed(false);
-        cout << "Pan Rate changed to: " << panRate << endl;
+        std::cout << "Pan Rate changed to: " << panRate << std::endl;
       }
       if (SpecialButtonList[12]->onButton(x, y, shiftx, -shifty) &&
           SpecialButtonList[12]->getButtonIsPressed()) {
         panRate -= 5;
         SpecialButtonList[12]->setButtonIsPressed(false);
-        cout << "Pan Rate changed to: " << panRate << endl;
+        std::cout << "Pan Rate changed to: " << panRate << std::endl;
       }
 
       // ON SCREEN PANNING BUTTONS
@@ -483,9 +482,9 @@ void mouse(int mouseButton, int state, int x, int y) {
       if (PopupYes.onButton(x, y, shiftx, -shifty) &&
           PopupYes.getButtonIsPressed()) {
         pathDeclared = true;
-        cout << "Starting at " << IntToBuilding(Start) << ", ending at "
-             << IntToBuilding(Finish) << endl;
-        // cout << Start << " " << Finish << endl;
+        std::cout << "Starting at " << IntToBuilding(Start) << ", ending at "
+             << IntToBuilding(Finish) << std::endl;
+        // std::cout << Start << " " << Finish << std::endl;
 
         // compute shortest path here
         vector<double> min_distance;
@@ -493,20 +492,20 @@ void mouse(int mouseButton, int state, int x, int y) {
         a.DijkstraComputePaths(Start, B.getDistMatrix(), min_distance,
                                previous);
         list<int> path = a.DijkstraGetShortestPathTo(Finish, previous);
-        /*      cout << "Path : ";*/
+        /*      std::cout << "Path : ";*/
         arr = new int[path.size()];
         copy(path.begin(), path.end(), arr);
         no_of_segments = path.size();
         /*
-        cout << "Distance from " << Start << " to " << Finish <<": " <<
-       min_distance[Finish] << endl;
+        std::cout << "Distance from " << Start << " to " << Finish <<": " <<
+       min_distance[Finish] << std::endl;
 
-        cout << "Path : ";
-        copy(path.begin(), path.end(), ostream_iterator<int>(cout, " "));
-        cout << endl;
+        std::cout << "Path : ";
+        copy(path.begin(), path.end(), ostream_iterator<int>(std::cout, " "));
+        std::cout << std::endl;
        for (unsigned int i = 0; i < path.size(); ++i)
-          cout << arr[i] << " ";
-          cout << endl;*/
+          std::cout << arr[i] << " ";
+          std::cout << std::endl;*/
         b.fillPath(A, path);
         b.display();
         b.draw();
@@ -570,7 +569,7 @@ void special_keyboard(int key, int x, int y) {
     if (shiftx - panRate > -374) {
       glTranslatef(-panRate, 0., 0.);
       shiftx += -panRate;
-      // cout << shiftx << endl;
+      // std::cout << shiftx << std::endl;
       PopupYes.changePosition(panRate, 0);
       PopupNo.changePosition(panRate, 0);
       for (int i = 0; i < numSpecialButtons; i++) {
@@ -595,7 +594,7 @@ void special_keyboard(int key, int x, int y) {
     if (shifty + panRate < 256) {
       glTranslatef(0., -panRate, 0.);
       shifty += panRate;
-      // cout << shifty << endl;
+      // std::cout << shifty << std::endl;
       PopupYes.changePosition(0, panRate);
       PopupNo.changePosition(0, panRate);
       for (int i = 0; i < numSpecialButtons; i++) {
@@ -633,7 +632,7 @@ void init(void) {
   glEnable(GL_BLEND);
 
   // welcome message
-  cout << "Welcome to Ole Compass." << endl;
+  std::cout << "Welcome to Ole Compass." << std::endl;
 }
 
 void init_gl_window() {
@@ -646,7 +645,7 @@ void init_gl_window() {
   glutCreateWindow(programName);
   init();
 
-  string texturePath = "StoMap.pam";
+  std::string texturePath = "StoMap.pam";
   campusmap = loadTexture(texturePath); // key to textures:  load them!
 
   glutDisplayFunc(drawWindow);

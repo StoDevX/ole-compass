@@ -12,7 +12,6 @@
 #include <sstream>
 #include <string>
 #include <vector>
-using namespace std;
 
 class Map {
 private:
@@ -26,14 +25,14 @@ protected:
 public:
   Map();
   int getSize();
-  void loadMap(string);
-  void loadMapCalc(string);
-  void loadMapCalcWeighted(string, bool, bool, bool, bool);
+  void loadMap(std::string);
+  void loadMapCalc(std::string);
+  void loadMapCalcWeighted(std::string, bool, bool, bool, bool);
   adjacency_list_t getDistMatrix();
   Neighbor operator[](int);
   void listNodes();
   void nodeDraw(bool, int, int);
-  void drawConnections(string filename);
+  void drawConnections(std::string filename);
   Neighbor *equateNodes(Neighbor *);
   ~Map();
 };

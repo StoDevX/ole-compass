@@ -30,7 +30,10 @@ Neighbor.o: Neighbor.cpp Neighbor.h Point.o
 	$(CXX) $(CXXFLAGS) -c $(<)
 
 
-.PHONY: clean
+.PHONY: clean reformat
 
 clean:
 	rm -f *.o mapDraw
+
+reformat:
+	clang-format -i -style=llvm *.cpp *.h

@@ -7,7 +7,7 @@ Button::Button() {
   height = 0;
 }
 
-Button::Button(istream &istr) {
+Button::Button(std::istream &istr) {
   istr >> x_pos;
   istr >> y_pos;
   istr >> width;
@@ -15,7 +15,7 @@ Button::Button(istream &istr) {
   istr >> name;
 }
 
-Button::Button(int x, int y, int w, int h, int id, string str) {
+Button::Button(int x, int y, int w, int h, int id, std::string str) {
   x_pos = x;
   y_pos = y;
   width = w;
@@ -62,7 +62,7 @@ void Button::draw(double r, double g, double b) {
   drawText();
 }
 
-void Button::display() { cout << name << " " << x_pos << " " << y_pos << endl; }
+void Button::display() { std::cout << name << " " << x_pos << " " << y_pos << std::endl; }
 
 bool Button::onButton(int x, int y, int ShiftFactorX, int ShiftFactorY) {
   return x >= x_pos + ShiftFactorX && y >= y_pos + ShiftFactorY &&
@@ -74,7 +74,7 @@ void Button::setButtonIsPressed(bool newVal) { isPressed = newVal; }
 
 void Button::setOverButton(bool newVal) { overButton = newVal; }
 
-string Button::getName() { return name; }
+std::string Button::getName() { return name; }
 
 int Button::getID() { return ID; }
 
@@ -87,4 +87,4 @@ void Button::changePosition(int x, int y) {
 
 Button::~Button() {}
 
-void Button::changeName(string newName) { name = newName; }
+void Button::changeName(std::string newName) { name = newName; }

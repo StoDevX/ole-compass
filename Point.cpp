@@ -10,7 +10,7 @@ Point::Point(double newx, double newy) {
   y = newy;
 }
 
-void Point::display() { cout << "(" << x << "," << y << ")"; }
+void Point::display() { std::cout << "(" << x << "," << y << ")"; }
 
 Point &Point::operator=(const Point &p) {
   x = p.x;
