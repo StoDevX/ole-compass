@@ -62,14 +62,14 @@ Image::Image(std::string fname) {
     f.get();
   } else { // P7
            /*  Example header:
-                   P7
-                   WIDTH 200
-                   HEIGHT 200
-                   DEPTH 2
-                   MAXVAL 255
-                   TUPLTYPE GRAYSCALE_ALPHA
-                   ENDHDR
-           */
+            P7
+            WIDTH 200
+            HEIGHT 200
+            DEPTH 2
+            MAXVAL 255
+            TUPLTYPE GRAYSCALE_ALPHA
+            ENDHDR
+            */
     std::string keyword, tupletype;
     f >> keyword;
     int counter = 0;
@@ -94,8 +94,7 @@ Image::Image(std::string fname) {
     if ("ENDHDR" != keyword) {
       std::cerr
           << "Error reading image file, perhaps the header is not correctly "
-             "formed?"
-          << std::endl;
+             "formed?" << std::endl;
       exit(-1);
     }
     f.get();
@@ -104,8 +103,7 @@ Image::Image(std::string fname) {
     std::cerr
         << "Error:  invalid maxval of " << maxval
         << " for incoming image (expected 255).  To fix, use convert with "
-           "-depth 8."
-        << std::endl;
+           "-depth 8." << std::endl;
     exit(-1);
   }
   data = new pixel[width * height];
@@ -133,7 +131,7 @@ Image::Image(std::string fname) {
               << " for incoming image (expected 1, 2, 3, or 4)." << std::endl;
     exit(-1);
   }
-  if (false) {
+  if (/* DISABLES CODE */ (false)) {
     // assume the alpha is backwards, so invert it?  (prior version of convert)
     for (unsigned i = 0; i < width * height; ++i)
       data[i].alpha = 255 - data[i].alpha;

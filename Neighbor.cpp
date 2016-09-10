@@ -34,16 +34,16 @@ Point Neighbor::getLocation() { return loc; }
 
 void Neighbor::DijkstraComputePaths(int source,
                                     const adjacency_list_t &adjacency_list,
-                                    vector<double> &min_distance,
-                                    vector<int> &previous) {
-  int n = adjacency_list.size();
+                                    std::vector<double> &min_distance,
+                                    std::vector<int> &previous) {
+  size_t n = adjacency_list.size();
   min_distance.clear();
   min_distance.resize(n, max_weight);
   min_distance[source] = 0;
   previous.clear();
   previous.resize(n, -1);
-  set<pair<double, int>> vertex_queue;
-  vertex_queue.insert(make_pair(min_distance[source], source));
+  std::set<std::pair<double, int>> vertex_queue;
+  vertex_queue.insert(std::make_pair(min_distance[source], source));
 
   while (!vertex_queue.empty()) {
     double dist = vertex_queue.begin()->first;
@@ -51,26 +51,28 @@ void Neighbor::DijkstraComputePaths(int source,
     vertex_queue.erase(vertex_queue.begin());
 
     // Visit each edge exiting u
-    const vector<Neighbor> &neighbors = adjacency_list[u];
-    for (vector<Neighbor>::const_iterator neighbor_iter = neighbors.begin();
+    const std::vector<Neighbor> &neighbors = adjacency_list[u];
+    for (std::vector<Neighbor>::const_iterator neighbor_iter =
+             neighbors.begin();
          neighbor_iter != neighbors.end(); neighbor_iter++) {
       int v = neighbor_iter->target;
       double weight = neighbor_iter->weight;
       double distance_through_u = dist + weight;
       if (distance_through_u < min_distance[v]) {
-        vertex_queue.erase(make_pair(min_distance[v], v));
+        vertex_queue.erase(std::make_pair(min_distance[v], v));
 
         min_distance[v] = distance_through_u;
         previous[v] = u;
-        vertex_queue.insert(make_pair(min_distance[v], v));
+        vertex_queue.insert(std::make_pair(min_distance[v], v));
       }
     }
   }
 }
 
-list<int> Neighbor::DijkstraGetShortestPathTo(int vertex,
-                                              const vector<int> &previous) {
-  list<int> path;
+std::list<int>
+Neighbor::DijkstraGetShortestPathTo(int vertex,
+                                    const std::vector<int> &previous) {
+  std::list<int> path;
   for (; vertex != -1; vertex = previous[vertex])
     path.push_front(vertex);
   return path;

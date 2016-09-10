@@ -15,15 +15,15 @@
 class Path : public Map {
 protected:
   int distance;
-  unsigned int pathsize;
+  size_t pathsize;
 
 public:
   Path();
-  void fillPath(Map, list<int>);
+  void fillPath(Map, std::list<int>);
   void emptyPath();
   void display();
   int getDistance();
-  unsigned int getPathsize();
+  size_t getPathsize();
   void setDistance(int);
   void setPathsize(unsigned int);
   void draw();

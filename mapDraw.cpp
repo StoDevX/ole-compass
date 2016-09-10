@@ -51,7 +51,7 @@ int shiftx = 0;
 int shifty = 0;
 int panRate = 50;
 
-int no_of_segments;
+size_t no_of_segments;
 
 int Start = -1;
 int Finish = -1;
@@ -68,7 +68,7 @@ Button PopupYes(200, 300, 60, 30, -1, "Yes");
 Button PopupNo(300, 300, 60, 30, -1, "No");
 
 void loadButtons(std::string file) {
-  ifstream infile(file);
+  std::ifstream infile(file);
   if (!infile.good()) {
     std::cerr << "Warning: Unable to open " << file << ", ignoring it."
               << std::endl;
@@ -85,7 +85,7 @@ void loadButtons(std::string file) {
 }
 
 void loadSpecialButtons(std::string file) {
-  ifstream infile(file);
+  std::ifstream infile(file);
   if (!infile.good()) {
     std::cerr << "Warning: Unable to open " << file << ", ignoring it."
               << std::endl;
@@ -125,8 +125,9 @@ void drawBox(double *pos) { drawBox(pos[0], pos[1], pos[2], pos[3]); }
 
 void drawText(double x, double y, std::string text) {
   glRasterPos2f(x, y);
-  for (const char ch : text)
+  for (const char ch : text) {
     glutBitmapCharacter(GLUT_BITMAP_9_BY_15, ch);
+  }
 }
 
 // DRAWING WINDOW
@@ -489,25 +490,25 @@ void mouse(int mouseButton, int state, int x, int y) {
         // std::cout << Start << " " << Finish << std::endl;
 
         // compute shortest path here
-        vector<double> min_distance;
-        vector<int> previous;
+        std::vector<double> min_distance;
+        std::vector<int> previous;
         a.DijkstraComputePaths(Start, B.getDistMatrix(), min_distance,
                                previous);
-        list<int> path = a.DijkstraGetShortestPathTo(Finish, previous);
+        std::list<int> path = a.DijkstraGetShortestPathTo(Finish, previous);
         /*      std::cout << "Path : ";*/
         arr = new int[path.size()];
         copy(path.begin(), path.end(), arr);
         no_of_segments = path.size();
         /*
-        std::cout << "Distance from " << Start << " to " << Finish <<": " <<
-       min_distance[Finish] << std::endl;
+         std::cout << "Distance from " << Start << " to " << Finish <<": " <<
+         min_distance[Finish] << std::endl;
 
-        std::cout << "Path : ";
-        copy(path.begin(), path.end(), ostream_iterator<int>(std::cout, " "));
-        std::cout << std::endl;
-       for (unsigned int i = 0; i < path.size(); ++i)
-          std::cout << arr[i] << " ";
-          std::cout << std::endl;*/
+         std::cout << "Path : ";
+         copy(path.begin(), path.end(), ostream_iterator<int>(std::cout, " "));
+         std::cout << std::endl;
+         for (unsigned int i = 0; i < path.size(); ++i)
+         std::cout << arr[i] << " ";
+         std::cout << std::endl;*/
         b.fillPath(A, path);
         b.display();
         b.draw();

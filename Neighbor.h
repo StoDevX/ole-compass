@@ -17,7 +17,7 @@
 
 class Neighbor;
 
-typedef vector<vector<Neighbor>> adjacency_list_t;
+typedef std::vector<std::vector<Neighbor>> adjacency_list_t;
 
 class Neighbor {
 protected:
@@ -39,8 +39,8 @@ public:
   Point getLocation();
   bool getVisibility();
   void DijkstraComputePaths(int source, const adjacency_list_t &,
-                            vector<double> &, vector<int> &);
-  list<int> DijkstraGetShortestPathTo(int, const vector<int> &);
+                            std::vector<double> &, std::vector<int> &);
+  std::list<int> DijkstraGetShortestPathTo(int, const std::vector<int> &);
   void display();
   bool onNode(int x, int y, int ShiftFactorX, int ShiftFactorY);
   void setNodeIsPressed(bool newVal);

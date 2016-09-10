@@ -7,7 +7,7 @@ Path::Path() : Map() {
   pathsize = 0;
 }
 
-void Path::fillPath(Map m, list<int> route) {
+void Path::fillPath(Map m, std::list<int> route) {
   pathsize = route.size();
   int *array = new int[pathsize];
   nodes = new Neighbor[pathsize];
@@ -45,7 +45,7 @@ void Path::display() {
 
 int Path::getDistance() { return distance; }
 
-unsigned int Path::getPathsize() { return pathsize; }
+size_t Path::getPathsize() { return pathsize; }
 
 void Path::setDistance(int dist) { distance = dist; }
 

@@ -12,7 +12,7 @@ int Map::getSize() { return size; }
 adjacency_list_t Map::getDistMatrix() { return distMatrix; }
 
 void Map::loadMap(std::string filename) {
-  ifstream g(filename);
+  std::ifstream g(filename);
   if (!g.good()) {
     std::cerr << "Warning: Unable to open " << filename << ", ignoring it."
               << std::endl;
@@ -38,7 +38,7 @@ void Map::loadMap(std::string filename) {
 }
 
 void Map::loadMapCalc(std::string filename) {
-  ifstream g(filename);
+  std::ifstream g(filename);
   if (!g.good()) {
     std::cerr << "Warning: Unable to open " << filename << ", ignoring it."
               << std::endl;
@@ -77,7 +77,7 @@ void Map::loadMapCalc(std::string filename) {
 
 void Map::loadMapCalcWeighted(std::string filename, bool outdoor, bool stairs,
                               bool blacktop, bool paths) {
-  ifstream g(filename);
+  std::ifstream g(filename);
   if (nodes != 0) {
     delete[] nodes;
   }
@@ -133,11 +133,11 @@ void Map::loadMapCalcWeighted(std::string filename, bool outdoor, bool stairs,
 
 Neighbor Map::operator[](int i) {
   if (i < 0) {
-    cout << "Negative node - setting i=0. ";
+    std::cout << "Negative node - setting i=0. ";
     i = 0;
   }
   if (i > size) {
-    cout << "Node greater than size. Setting i=size-1. ";
+    std::cout << "Node greater than size. Setting i=size-1. ";
     i = size - 1;
   }
   return nodes[i];
@@ -145,9 +145,9 @@ Neighbor Map::operator[](int i) {
 
 void Map::listNodes() {
   for (int i = 0; i < size; ++i) {
-    cout << nodes[i].getID() << ": ";
+    std::cout << nodes[i].getID() << ": ";
     nodes[i].getLocation().display();
-    cout << std::endl;
+    std::cout << std::endl;
   }
 }
 
@@ -181,7 +181,7 @@ void Map::nodeDraw(bool drawAll, int begin, int end) {
 }
 
 void Map::drawConnections(std::string filename) {
-  ifstream g(filename);
+  std::ifstream g(filename);
   if (!g.good()) {
     std::cerr << "Warning: Unable to open " << filename << ", ignoring it."
               << std::endl;
