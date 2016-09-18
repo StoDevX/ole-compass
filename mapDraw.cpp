@@ -23,6 +23,8 @@
 #include "Path.h"
 #include "button.h"
 
+using namespace std;
+
 bool mouseIsDragging = false;
 bool selectionFinished = false;
 bool redrawWindow = false;

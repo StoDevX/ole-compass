@@ -13,6 +13,8 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class Map {
 private:
   adjacency_list_t distMatrix;

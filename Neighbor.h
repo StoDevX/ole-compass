@@ -15,6 +15,8 @@
 
 #include "opengl.h"
 
+using namespace std;
+
 class Neighbor;
 
 typedef vector<vector<Neighbor>> adjacency_list_t;
