@@ -31,3 +31,5 @@ Originally from [the OleCompass page on the CS Wiki](http://www.cs.stolaf.edu/wi
 To compile the code, simply type `make mapDraw` in the command line. To run it, enter `./mapDraw`, without quotations.
 
 The input files are StoMap.pam, EntireMapCalc.txt, buttonList.txt, and SpecialButtons.txt.
+
+![a screenshot of the campus map](screenshots/PathShown.png?raw=true)
