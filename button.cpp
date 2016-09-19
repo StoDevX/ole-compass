@@ -1,5 +1,7 @@
 #include "button.h"
 
+using namespace std;
+
 Button::Button() {
   x_pos = 0;
   y_pos = 0;
